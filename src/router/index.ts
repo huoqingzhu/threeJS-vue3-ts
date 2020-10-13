@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
       title: "首页",
       keepAlive: true
     },
-
+    redirect: "home",
     component: () => import("@/views/Home.vue"),
     children
   }
