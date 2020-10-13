@@ -1,25 +1,32 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
-
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
+  files
+    .keys()
+    .reduce((arr, key) => {
+      const routes = files(key).default;
+      return typeof routes === "object" ? arr.concat(routes) : arr;
+    }, [])
+    .sort((prev, next) => (prev || 0) - (next || 0));
+const children = loadRoutes(require.context("./home", false, /\.js$/));
+// 把拿到的路由存到本地
+localStorage.setItem("router", JSON.stringify(children));
+console.log(children);
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
-    component: Home
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    meta: {
+      title: "首页",
+      keepAlive: true
+    },
+
+    component: () => import("@/views/Home.vue"),
+    children
   }
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes
 });
 
