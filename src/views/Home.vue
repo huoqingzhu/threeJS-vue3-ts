@@ -27,23 +27,6 @@ import {
 export default defineComponent({
   components: {
     Header
-  },
-  data() {
-    return {
-      age: 20
-    };
-  },
-  setup() {
-    const state = reactive({
-      name: "霍庆祝"
-    });
-    const change = (): void => {
-      state.name = "wo";
-    };
-    return {
-      ...toRefs(state),
-      change
-    };
   }
 });
 </script>
@@ -62,10 +45,12 @@ export default defineComponent({
     height: 60px;
     background-color: #fff;
     box-shadow: 0px 3px 3px #ccc;
+    z-index: 10;
   }
 
   .home {
     margin-top: 70px;
+    z-index: 1;
   }
 
   .footter {

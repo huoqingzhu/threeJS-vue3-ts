@@ -1,6 +1,6 @@
 <template>
 <div class="home">
-  <a-button type="primary" @click="getDate">发起数据请求</a-button>
+  <a-button type="primary" @click="getDate">{{ name }}</a-button>
   <div v-for="item in listData" :key="item._id">
     <p>
       {{ item.title }}

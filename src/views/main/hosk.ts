@@ -1,14 +1,23 @@
 import { reactive } from "vue";
 import { article } from "@/api/article";
 
+interface Data {
+  listData: any;
+  name: string;
+}
 const mapHosk = (): any => {
-  const state: any = reactive({
-    listData: []
+  const state: Data = reactive({
+    listData: [],
+    name: "请求数据"
   });
+
   const getDate = () => {
-    article().then(res => {
-      state.listData = res;
-    });
+    state.name === "请求数据"
+      ? article().then(res => {
+          state.listData = res;
+          state.name = "收起列表";
+        })
+      : ((state.listData = []), (state.name = "请求数据"));
   };
 
   return {
