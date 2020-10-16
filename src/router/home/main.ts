@@ -1,11 +1,11 @@
 export default [
   {
-    path: "/home",
-    name: "首页",
-    component: () => import("@/views/main/main.vue"),
+    path: "/fish",
+    name: "吸鱼泵清污系统",
+    component: () => import("@/views/fish/index.vue"),
     meta: {
       auth: true,
-      title: "海水养殖系统",
+      title: "吸鱼泵清污系统",
       iocn: "MailOutlined",
       keepAlive: true
     }

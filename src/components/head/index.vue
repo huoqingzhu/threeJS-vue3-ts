@@ -3,18 +3,18 @@
   <div>
     <img class="im" src="@/assets/qiyao.png" alt />
   </div>
-  <div class="title">{{ title }}</div>
+  <div class="title">{{ K }}</div>
   <div class="center">
     <span class="time"> {{ date }} {{ time }}</span>
     <UserSwitchOutlined :style="{ fontSize: '30px', color: '#08c' }" />
   </div>
 </div>
 <div class="police">
-  <div class="dao">
-    <a-button :style="style1" @click="change('海水养殖系统', '/home')">海水养殖系统</a-button>
-    <a-button :style="style2" @click="change('吸鱼泵清污系统', '/fish')">吸鱼泵清污系统</a-button>
-    <a-button :style="style3" @click="change('历史报警记录', '/table')">历史报警记录</a-button>
-  </div>
+  <template v-for="item in listTitle" :key="item.path">
+    <a-button :class="zhong(item.meta.title)" @click="choose(item)">
+      {{ item.name }}
+    </a-button>
+  </template>
   <div><img style="margin:0 20px" src="@/assets/bao.png" alt="报警" /></div>
   <div>
     <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
@@ -26,13 +26,19 @@
 import {
   UserSwitchOutlined
 } from "@ant-design/icons-vue";
-import {
-  useRouter
-} from "vue-router";
+
 import {
   defineComponent,
-  toRefs
+  toRefs,
+  reactive,
+  ref,
+  computed,
+  watch
 } from "vue";
+import {
+  useRouter,
+  useRoute
+} from "vue-router";
 import {
   time
 } from "@/hooks/index";
@@ -42,53 +48,43 @@ export default defineComponent({
   },
   data() {
     return {
-      title: "海水养殖系统",
-      style1: {},
-      style2: {},
-      style3: {}
+      title: "海水养殖系统"
     };
   },
-  watch: {
-    title: {
-      immediate: true,
-      // 数据发生变化就会调用这个函数
-      handler(newVal, oldVal) {
-        if (newVal === "海水养殖系统") {
-          this.style1 = {
-            backgroundColor: "#00b3f5"
-          };
-          this.style2 = {};
-          this.style3 = {};
-        } else if (newVal === "吸鱼泵清污系统") {
-          this.style2 = {
-            backgroundColor: "#00b3f5"
-          };
-          this.style1 = {};
-          this.style3 = {};
-        } else if (newVal === "历史报警记录") {
-          this.style3 = {
-            backgroundColor: "#00b3f5"
-          };
-          this.style1 = {};
-          this.style2 = {};
-        }
-      }
-    }
-  },
-  methods: {
-    change(value: string, path: string) {
-      this.title = value;
-      this.$router.push({
-        path: path
-      });
-    }
-  },
+
   setup() {
     const {
       timeState
     } = time();
+    let routers = {};
+    let a: any;
+    a = localStorage.getItem("router");
+    routers = JSON.parse(a);
+    const listTitle = reactive(routers);
+    const router = useRouter();
+    const route = reactive(useRoute());
+    const K = ref(route.name);
+    const zhong = computed(() => {
+      return (val: any) => {
+        if (val === K.value) return "bit";
+      };
+    });
+
+    watch(
+      () => route.name,
+      a => {
+        K.value = a;
+      }
+    );
+    const choose = (val: any) => {
+      router.push(val.path).catch(() => {});
+    };
     return {
-      ...toRefs(timeState)
+      ...toRefs(timeState),
+      listTitle,
+      choose,
+      zhong,
+      K
     };
   }
 });
@@ -122,12 +118,6 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   color: #fff;
-}
-
-.dao {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   button {
     margin-left: 10px;
@@ -138,5 +128,9 @@ export default defineComponent({
     height: 40px;
     font-size: 20px;
   }
+}
+
+.bit {
+  background-color: #00b3f5 !important;
 }
 </style>
