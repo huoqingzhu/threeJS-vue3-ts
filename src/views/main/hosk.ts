@@ -1,27 +1,29 @@
-import { reactive } from "vue";
+import { reactive ,onMounted, onBeforeUnmount,ref,toRef} from "vue";
 import { article } from "@/api/article";
-
+import {Rotation} from "@/hooks/index";
 interface Data {
   listData: any;
   name: string;
 }
 const mapHosk = (): any => {
   const state: Data = reactive({
-    listData: [],
+    listData:1,
     name: "请求数据"
   });
-
+  const data= toRef(state, 'listData')
+  const {getList,clear} = Rotation(data)
   const getDate = () => {
-    state.name === "请求数据"
-      ? article().then(res => {
-          state.listData = res;
-          state.name = "收起列表";
-        })
-      : ((state.listData = []), (state.name = "请求数据"));
   };
-
+ 
+  onMounted(()=>{
+    getList()
+  })
+  onBeforeUnmount(()=>{
+    clear()
+  })
   return {
     state,
+    data,
     getDate
   };
 };

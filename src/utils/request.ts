@@ -9,7 +9,7 @@ let baseURL = "http://123.56.85.24:5000/api/";
 if (getQueryString("ip") == 1) {
   baseURL = "http://123.56.85.24:5000/api/";
 } else if (getQueryString("ip") == 2) {
-  baseURL = "http://ddc.lycent.cn/api";
+  baseURL = "http://fq.lycent.cn/api";
 } else {
   baseURL = "http://123.56.85.24:5000/api/";
 }

@@ -13,5 +13,10 @@ body {
   top: 0;
   left: 0;
   margin: auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+  }
 }
 </style>
