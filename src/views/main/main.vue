@@ -1,7 +1,7 @@
 <template>
 <div class="home">
   <h1>main主页</h1>
-  <h2>{{ data }}</h2>
+  <h2>{{ listData }}</h2>
 </div>
 </template>
 
@@ -13,21 +13,14 @@ import {
 import {
   mapHosk
 } from "./hosk";
-import {
-  Rotation
-} from "@/hooks/index";
+
 export default defineComponent({
   setup() {
     const {
-      state,
-      getDate,
-      data
+      state
     } = mapHosk();
-    // Rotation("1");
     return {
-      ...toRefs(state),
-      getDate,
-      data
+      ...toRefs(state)
     };
   }
 });

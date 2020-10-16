@@ -47,7 +47,7 @@ module.exports = {
     //proxy:{'/api':{}},代理器中设置/api,项目中请求路径为/api的替换为target
     proxy: {
       "/api": {
-        target: "http://localhost:8080", //代理地址，这里设置的地址会代替axios中设置的baseURL http://123.56.85.24:5000/process.env.BASE_URL
+        target: "http://192.168.1.100/", //代理地址，这里设置的地址会代替axios中设置的baseURL http://123.56.85.24:5000/process.env.BASE_URL
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         //ws: true, // proxy websockets
         pathRewrite: {

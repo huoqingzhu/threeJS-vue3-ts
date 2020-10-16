@@ -33,15 +33,23 @@ import {
   reactive,
   ref,
   computed,
-  watch
+  watch,
+  onMounted
 } from "vue";
 import {
   useRouter,
   useRoute
 } from "vue-router";
 import {
+  Rotations
+} from "@/hooks/index";
+import {
+  useStore
+} from "vuex";
+import {
   time
 } from "@/hooks/index";
+
 export default defineComponent({
   components: {
     UserSwitchOutlined
@@ -79,6 +87,7 @@ export default defineComponent({
     const choose = (val: any) => {
       router.push(val.path).catch(() => {});
     };
+
     return {
       ...toRefs(timeState),
       listTitle,

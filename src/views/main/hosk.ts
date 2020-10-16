@@ -1,30 +1,34 @@
 import { reactive ,onMounted, onBeforeUnmount,ref,toRef} from "vue";
-import { article } from "@/api/article";
-import {Rotation} from "@/hooks/index";
+import {useStore} from "vuex";
+import {
+  getData
+} from "@/api/article";
+import {
+  Rotations
+} from "@/hooks/index";
 interface Data {
   listData: any;
   name: string;
 }
 const mapHosk = (): any => {
   const state: Data = reactive({
-    listData:1,
+    listData:{1:30},
     name: "请求数据"
   });
-  const data= toRef(state, 'listData')
-  const {getList,clear} = Rotation(data)
-  const getDate = () => {
-  };
- 
-  onMounted(()=>{
-    getList()
-  })
-  onBeforeUnmount(()=>{
-    clear()
-  })
+    const store = useStore();
+    const fn = () => {
+      getData("1").then(res => {
+        store.commit("setData", res.data);
+        state.listData=store.state.listData
+      });
+    };
+    const {
+      getList,
+      
+    } = Rotations(fn);
+    getList();
   return {
-    state,
-    data,
-    getDate
+    state, 
   };
 };
 export { mapHosk };

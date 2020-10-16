@@ -1,4 +1,5 @@
 import {reactive,onMounted, onBeforeUnmount} from "vue"
+import {getData} from "@/api/article"
 /**
  * 获取时间
  * @returns date 日期 time 时间
@@ -39,15 +40,16 @@ onBeforeUnmount(()=>{
 }
 /**
  * http轮询
- * @param   一个响应式数据
+ * @params  一个函数函数
+ *  @params  间隔多长时间
  * @returns getList 开始
  * @returns clear 结束轮训
  */
-const Rotation=(listData:any)=>{
+const Rotations=(fn:any,time=1)=>{
   let  timer=1
   const getList=()=>{
    try{
-  listData.value=listData.value+1
+    fn()
     start()
    }catch{
     clear()
@@ -59,8 +61,8 @@ const Rotation=(listData:any)=>{
  const start=()=> {
    timer = setTimeout(() => {
       getList();
-    }, 1000);
+    }, time*1000);
   }
 return {getList,clear}
 }
-export {time,Rotation}
+export {time,Rotations}
