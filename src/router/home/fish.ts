@@ -5,7 +5,7 @@ export default [
     component: () => import("@/views/fish/index.vue"),
     meta: {
       auth: true,
-      title: "鱼",
+      title: "吸鱼泵清污系统",
       iocn: "MailOutlined",
       keepAlive: true
     }

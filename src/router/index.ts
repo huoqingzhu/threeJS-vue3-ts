@@ -7,7 +7,7 @@ const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
       return typeof routes === "object" ? arr.concat(routes) : arr;
     }, [])
     .sort((prev, next) => (prev || 0) - (next || 0));
-const children = loadRoutes(require.context("./home", false, /\.js$/));
+const children = loadRoutes(require.context("./home", false, /\.ts$/));
 // 把拿到的路由存到本地
 localStorage.setItem("router", JSON.stringify(children));
 console.log(children);

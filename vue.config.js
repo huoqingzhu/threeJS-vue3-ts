@@ -75,6 +75,11 @@ module.exports = {
   chainWebpack(config) {
     config.plugins.delete("preload"); // TODO: need test
     config.plugins.delete("prefetch"); // TODO: need test
+    config.plugin('html')
+      .tap(args => {
+        args[0].title = "海洋养殖系统";
+        return args;
+      })
     // set preserveWhitespace
     // config.module
     //   .rule("vue")

@@ -5,7 +5,7 @@ export default [
     component: () => import("@/views/main/main.vue"),
     meta: {
       auth: true,
-      title: "地图",
+      title: "海水养殖系统",
       iocn: "MailOutlined",
       keepAlive: true
     }

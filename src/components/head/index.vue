@@ -105,14 +105,15 @@ export default defineComponent({
   position: absolute;
   width: 100%;
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
+
   letter-spacing: 15px;
   color: #436894;
 }
 
 .time {
   font-size: 24px;
-  margin-right: 50px;
+  margin-right: 40px;
   color: #2c78d4;
 }
 
