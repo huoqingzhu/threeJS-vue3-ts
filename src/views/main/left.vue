@@ -1,68 +1,75 @@
 <template>
-<div class="V1">
-  <div class="line" style="width:55px"></div>
-  <img src="./img/heng.png" alt="" />
-  <div class="line" style="width:105px"></div>
-  <div class="v2">
-    <div class="v3">
-      <div class="v4">{{ title }}</div>
-      <div class="center pad">
-        <div>
-          <div class="circularS"></div>
-          <div class="yLine" style="height:55px;margin-left:18px"></div>
-        </div>
-        <div>
-          <div class="circularS"></div>
-          <div class="yLine" style="height:55px;margin-left:18px"></div>
+  <div class="V1">
+    <div class="line" style="width:55px"></div>
+    <img src="./img/heng.png" alt="" />
+    <div class="line" style="width:105px"></div>
+    <div class="v2">
+      <div class="v3">
+        <div class="v4">{{ title }}</div>
+        <div class="center pad">
+          <div>
+            <div class="circularS">P</div>
+            <div class="yLine" style="height:55px;margin-left:18px"></div>
+          </div>
+          <div>
+            <div class="circularS">P</div>
+            <div class="yLine" style="height:55px;margin-left:18px"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="circular1">
-      <img src="./img/open.png" alt="" />
-    </div>
-    <div class="v5">
-      <div style="display:flex">
-        <div>
-          <div class="yLine" style="height:55px;margin-left:18px"></div>
-          <img src="./img/shu.png" alt="" style="margin-left:0px" />
-          <div class="yLine" style="height:55px;margin-left:18px"></div>
-        </div>
-        <div style="margin-top:58px;margin-left:30px;">
-          <div class="circularS">P</div>
-          <div class="yLine" style="height:55px;margin-left:18px"></div>
-        </div>
-        <div style="margin-left:20px;margin-top:25px">
-          <div class="center">
-            <div class="line" style="width:55px"></div>
-            <img src="./img/heng.png" alt="" />
-            <div class="line" style="width:55px"></div>
+      <div class="circular1">
+        <img src="./img/open.png" alt="" />
+      </div>
+      <div class="v5">
+        <div style="display:flex">
+          <div>
+            <div class="yLine" style="height:55px;margin-left:18px"></div>
+            <img src="./img/shu.png" alt="" style="margin-left:0px" />
+            <div class="yLine" style="height:55px;margin-left:18px"></div>
           </div>
-          <div class="center" style="margin-top:-20px">
-            <div class="yLine" style="height:105px;"></div>
-            <div class="yLine" style="height:105px;"></div>
+          <div style="margin-top:58px;margin-left:30px;">
+            <div class="circularS">P</div>
+            <div class="yLine" style="height:55px;margin-left:18px"></div>
+          </div>
+          <div style="margin-left:20px;margin-top:25px">
+            <div class="center">
+              <div class="line" style="width:55px"></div>
+              <img src="./img/heng.png" alt="" />
+              <div class="line" style="width:55px"></div>
+            </div>
+            <div class="center" style="margin-top:-20px">
+              <div class="yLine" style="height:105px;"></div>
+              <div class="yLine" style="height:105px;"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="line" style="width:105px"></div>
+    <img src="./img/heng.png" alt="" />
+    <div class="line" style="width:55px"></div>
+    <img src="./img/heng.png" alt="" />
+    <div class="line" style="width:105px"></div>
+    <div>
+      <img
+        src="./img/fa.png"
+        alt=""
+        style="width:40px;height:40px;margin-top:-24px"
+      />
+    </div>
+    <div class="line" style="width:105px"></div>
+    <img
+      src="./img/san1.png"
+      class="san"
+      style=" margin-left: -450px;"
+      alt=""
+    />
   </div>
-  <div class="line" style="width:105px"></div>
-  <img src="./img/heng.png" alt="" />
-  <div class="line" style="width:55px"></div>
-  <img src="./img/heng.png" alt="" />
-  <div class="line" style="width:105px"></div>
-  <div>
-    <img src="./img/fa.png" alt="" style="width:40px;height:40px;margin-top:-24px" />
-  </div>
-  <div class="line" style="width:105px"></div>
-  <img src="./img/san1.png" class="san" style=" margin-left: -450px;" alt="" />
-</div>
 </template>
 
 <script lang="ts">
-import Vue, {
-  defineComponent
-} from "vue";
+import Vue, { defineComponent } from "vue";
 export default defineComponent({
   props: {
     title: {
@@ -125,8 +132,8 @@ export default defineComponent({
   font-size: 16px;
   margin-top: -130px;
   margin-left: -50px;
-
-  border: 2px solid #ccc;
+  font-style: italic;
+  border: 2px dashed #ccc;
 
   .v4 {
     height: 60px;
@@ -145,6 +152,8 @@ export default defineComponent({
   align-items: center;
   border-radius: 50%;
   background-color: #ccc;
+  font-style: italic;
+  font-size: 16px;
 }
 
 .circularS1 {
@@ -153,7 +162,9 @@ export default defineComponent({
   border: 3px solid #4aa0a0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  font-style: italic;
+  font-size: 16px;
+  align-tems: center;
   background-color: #ccc;
 }
 
