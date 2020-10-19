@@ -11,7 +11,7 @@ if (getQueryString("ip") == 1) {
 } else if (getQueryString("ip") == 2) {
   baseURL = "http://fq.lycent.cn/api";
 } else {
-  baseURL = "http://192.168.1.100/api";
+  baseURL = "http://fq.lycent.cn/api";
 }
 const service = axios.create({
   baseURL,

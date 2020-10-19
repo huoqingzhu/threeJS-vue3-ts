@@ -7,7 +7,8 @@ import {
   Popover,
   Table
 } from "ant-design-vue";
-
+import Cards from "@/components/component/Card.vue"
+import Police from "@/components/component/Police.vue"
 const ant = {
   install(Vue: {
     component: (arg0: string, arg1: any) => void;
@@ -19,6 +20,8 @@ const ant = {
     Vue.component(Popover.name, Popover);
     Vue.component(Table.name, Table);
     Vue.component(Spin.name, Spin);
+    Vue.component("Card", Cards);
+    Vue.component("Police", Police);
     // Vue.use(Menu);
   }
 };

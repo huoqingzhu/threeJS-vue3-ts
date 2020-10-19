@@ -7,7 +7,7 @@ export default [
     meta: {
       auth: true,
       title: "海水养殖系统",
-      iocn: "MailOutlined",
+      iocn: "yang",
       keepAlive: true
     }
   }

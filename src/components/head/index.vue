@@ -1,23 +1,25 @@
 <template>
-<div class="center">
+<div class="homes">
+  <div class="left">
+    <template v-for="item in listTitle" :key="item.path">
+      <div :class="zhong(item.meta.title)" @click="choose(item)">
+        <div style=" text-align: center;margin:15px">
+          <img :src="require(`@/assets/${item.meta.iocn}.png`)" :alt="item.meta.iocn" />
+        </div>
+        <div style=" text-align: center;">{{ item.name }}</div>
+      </div>
+    </template>
+  </div>
   <div>
     <img class="im" src="@/assets/qiyao.png" alt />
   </div>
   <div class="title">{{ K }}</div>
-  <div class="center">
-    <span class="time"> {{ date }} {{ time }}</span>
-    <UserSwitchOutlined :style="{ fontSize: '30px', color: '#08c' }" />
-  </div>
-</div>
-<div class="police">
-  <template v-for="item in listTitle" :key="item.path">
-    <a-button :class="zhong(item.meta.title)" @click="choose(item)">
-      {{ item.name }}
-    </a-button>
-  </template>
-  <div><img style="margin:0 20px" src="@/assets/bao.png" alt="报警" /></div>
   <div>
-    <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
+    <div class="right">
+      <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
+      <img src="@/assets/bao1.png" alt="报警" />
+      <span class="time"> {{ date }} {{ time }}</span>
+    </div>
   </div>
 </div>
 </template>
@@ -64,33 +66,38 @@ export default defineComponent({
     const {
       timeState
     } = time();
+
     let routers = {};
     let a: any;
     a = localStorage.getItem("router");
     routers = JSON.parse(a);
-    const listTitle = reactive(routers);
+    let state = reactive({
+      listTitle: routers
+    });
     const router = useRouter();
     const route = reactive(useRoute());
     const K = ref(route.name);
     const zhong = computed(() => {
       return (val: any) => {
         if (val === K.value) return "bit";
+        return "box";
       };
     });
 
     watch(
       () => route.name,
-      a => {
+      (a, b) => {
         K.value = a;
       }
     );
     const choose = (val: any) => {
+      console.log(state.listTitle);
       router.push(val.path).catch(() => {});
     };
 
     return {
       ...toRefs(timeState),
-      listTitle,
+      ...toRefs(state),
       choose,
       zhong,
       K
@@ -100,10 +107,57 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.homes {
+  display: flex;
+}
+
 .im {
-  height: 50px;
-  line-height: 50px;
-  margin: 0 0.1rem;
+  height: 100px;
+  line-height: 100px;
+  padding: 20px 0;
+  width: 240px;
+}
+
+.left {
+  display: flex;
+  height: 100px;
+  align-items: center;
+  color: #000;
+  z-index: 1;
+}
+
+// .tit {
+//   position: absolute;
+//   width: 100%;
+//   height: 100px;
+//   margin-top: -100px;
+//   text-align: center;
+//   font-size: 48px;
+//   color: #fff;
+// }
+
+.bit {
+  width: 140px;
+  // border: 1px solid #ccc;
+  color: #00b3f5 !important;
+}
+
+.time {
+  font-size: 36px;
+  margin-left: 10px;
+  color: #2c78d4;
+}
+
+.box {
+  width: 140px;
+  // border: 1px solid #ccc;
+  color: #000 !important;
+}
+
+.right {
+  height: 100px;
+  line-height: 100px;
+  margin-left: 650px;
 }
 
 .title {
@@ -111,35 +165,10 @@ export default defineComponent({
   width: 100%;
   text-align: center;
   font-size: 50px;
-
+  z-index: 0;
+  height: 100px;
+  line-height: 100px;
   letter-spacing: 15px;
   color: #436894;
-}
-
-.time {
-  font-size: 24px;
-  margin-right: 40px;
-  color: #2c78d4;
-}
-
-.police {
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  color: #fff;
-
-  button {
-    margin-left: 10px;
-    width: 160px;
-    background-color: rgb(95, 93, 93);
-    border: 0px;
-    color: #fff;
-    height: 40px;
-    font-size: 20px;
-  }
-}
-
-.bit {
-  background-color: #00b3f5 !important;
 }
 </style>

@@ -37,21 +37,23 @@ export default defineComponent({
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #004c69;
+  background-color: #121c30;
 
   .Tabbar {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    height: 100px;
+    // line-height: 100px;
     background-color: #fff;
     // box-shadow: 0px 3px 3px #ccc;
     z-index: 10;
   }
 
   .home {
-    margin-top: 120px;
+    width: 100%;
+    height: 85%;
+    margin-top: 160px;
     z-index: 1;
   }
 

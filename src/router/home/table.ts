@@ -1,12 +1,12 @@
 export default [
   {
     path: "/table",
-    name: "历史报警记录",
+    name: "其他船舶设备",
     component: () => import("@/views/table/index.vue"),
     meta: {
       auth: true,
-      title: "历史报警记录",
-      iocn: "MailOutlined",
+      title: "其他船舶设备",
+      iocn: "ji",
       keepAlive: true
     }
   }
