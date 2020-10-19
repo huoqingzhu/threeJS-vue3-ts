@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0e4b0c"],{"90fe":function(e,c,n){"use strict";n.r(c);var t=n("7a23"),o={class:"about"},a=Object(t["createVNode"])("h1",null,"This is an about page",-1);function s(e,c,n,s,u,r){return Object(t["openBlock"])(),Object(t["createBlock"])("div",o,[a])}const u={};u.render=s;c["default"]=u}}]);
