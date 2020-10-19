@@ -170,5 +170,6 @@ export default defineComponent({
   line-height: 100px;
   letter-spacing: 15px;
   color: #436894;
+  font-weight: 700;
 }
 </style>
