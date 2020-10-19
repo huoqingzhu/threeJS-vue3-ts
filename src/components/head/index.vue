@@ -1,33 +1,38 @@
 <template>
-<div class="homes">
-  <div class="left">
-    <template v-for="item in listTitle" :key="item.path">
-      <div :class="zhong(item.meta.title)" @click="choose(item)">
-        <div style=" text-align: center;margin:15px">
-          <img :src="require(`@/assets/${item.meta.iocn}.png`)" :alt="item.meta.iocn" />
+  <div class="homes">
+    <div class="left">
+      <template v-for="item in listTitle" :key="item.path">
+        <div :class="zhong(item.meta.title)" @click="choose(item)">
+          <div style=" text-align: center;margin:15px">
+            <img
+              :src="
+                K === item.name
+                  ? require(`@/assets/${item.meta.iocn}1.png`)
+                  : require(`@/assets/${item.meta.iocn}.png`)
+              "
+              :alt="item.meta.iocn"
+            />
+          </div>
+          <div style=" text-align: center;">{{ item.name }}</div>
         </div>
-        <div style=" text-align: center;">{{ item.name }}</div>
+      </template>
+    </div>
+    <div>
+      <img class="im" src="@/assets/qiyao.png" alt />
+    </div>
+    <div class="title">{{ K }}</div>
+    <div>
+      <div class="right">
+        <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
+        <img src="@/assets/bao1.png" alt="报警" />
+        <span class="time"> {{ date }} {{ time }}</span>
       </div>
-    </template>
-  </div>
-  <div>
-    <img class="im" src="@/assets/qiyao.png" alt />
-  </div>
-  <div class="title">{{ K }}</div>
-  <div>
-    <div class="right">
-      <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
-      <img src="@/assets/bao1.png" alt="报警" />
-      <span class="time"> {{ date }} {{ time }}</span>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
-import {
-  UserSwitchOutlined
-} from "@ant-design/icons-vue";
+import { UserSwitchOutlined } from "@ant-design/icons-vue";
 
 import {
   defineComponent,
@@ -38,19 +43,10 @@ import {
   watch,
   onMounted
 } from "vue";
-import {
-  useRouter,
-  useRoute
-} from "vue-router";
-import {
-  Rotations
-} from "@/hooks/index";
-import {
-  useStore
-} from "vuex";
-import {
-  time
-} from "@/hooks/index";
+import { useRouter, useRoute } from "vue-router";
+import { Rotations } from "@/hooks/index";
+import { useStore } from "vuex";
+import { time } from "@/hooks/index";
 
 export default defineComponent({
   components: {
@@ -63,9 +59,7 @@ export default defineComponent({
   },
 
   setup() {
-    const {
-      timeState
-    } = time();
+    const { timeState } = time();
 
     let routers = {};
     let a: any;
