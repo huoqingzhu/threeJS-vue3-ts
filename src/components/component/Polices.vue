@@ -1,7 +1,16 @@
 <template>
 <div class="police">
   <div>{{ title }}</div>
-  <div class="po" :style="style"></div>
+  <div class="fex">
+    <div class="fex">
+      高
+      <div class="po" :style="style"></div>
+    </div>
+    <div class="fex" style="margin-left:5px">
+      低
+      <div class="po" :style="styles"></div>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -47,8 +56,22 @@ export default defineComponent({
         };
       }
     });
+    const styles = computed(() => {
+      console.log(props.num);
+      console.log(Boolean(store.state.listData[props.num]));
+      if (!Boolean(store.state.listData[props.num])) {
+        return {
+          background: `${props.color}`
+        };
+      } else {
+        return {
+          background: "#ccc"
+        };
+      }
+    });
     return {
-      style
+      style,
+      styles
     };
   }
 });
@@ -57,17 +80,23 @@ export default defineComponent({
 <style lang="less" scoped>
 .police {
   display: flex;
-
   justify-content: space-between;
-  height: 50px;
+  height: 40px;
   align-items: center;
   color: 20px;
   color: #fff;
+  font-size: 18px;
 }
 
 .po {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
+}
+
+.fex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

@@ -6,7 +6,7 @@
   </div>
 
   <div class="yLine" style="height:255px;"></div>
-  <div><img src="./img/shu.png" alt="" style="margin-left:0px" /></div>
+  <div><img :src="src1" alt="" style="margin-left:0px" /></div>
   <div class="yLine" style="height:55px;"></div>
   <div class="v20">
     <div class="v23" style="margin-left:-26px;margin-top:-300px">
@@ -15,8 +15,8 @@
       <div class="line" style="width:55px"></div>
     </div>
     <span class="v21">{{ title }}</span>
-    <div class="v25">{{ title }}</div>
-    <div class="v24">{{ title }}</div>
+    <div class="v25">{{ state[0].title || "暂无" }}</div>
+    <div class="v24">{{ state[1].title || "暂无" }}</div>
     <img src="./img/shuS.png" class="v22" alt="" />
     <div class="v23" style="margin-left:-95px;margin-top:100px">
       <img src="./img/heng.png" alt="" />
@@ -25,22 +25,64 @@
     <img src="./img/chang.png" alt="" style="width:250px;height:250px" />
   </div>
   <div class="yLine" style="height:55px;"></div>
-  <img src="./img/shu.png" alt="" />
+  <img :src="src2" alt="" />
   <div class="yLine" style="height:105px;"></div>
 </div>
 </template>
 
 <script lang="ts">
 import Vue, {
-  defineComponent
+  defineComponent,
+  computed
 } from "vue";
+import {
+  useStore
+} from "vuex";
 export default defineComponent({
   name: "com2",
   props: {
     title: {
       type: String,
       default: "养殖海水泵1"
+    },
+    state: {
+      type: Array,
+      default () {
+        return [{
+            title: "YZV40",
+            open: "23",
+            off: "24"
+          },
+          {
+            title: "YZV39",
+            open: "25",
+            off: "26"
+          }
+        ];
+      }
     }
+  },
+  setup(props: any) {
+    const store = useStore();
+    const src1 = computed(() => {
+      if (Boolean(store.state.listData[props.state[0].open])) {
+        return require("./img/shu1.png");
+      } else {
+        return require("./img/shu2.png");
+      }
+    });
+    const src2 = computed(() => {
+      if (Boolean(store.state.listData[props.state[1].open])) {
+        return require("./img/shu1.png");
+      } else {
+        return require("./img/shu2.png");
+      }
+    });
+
+    return {
+      src1,
+      src2
+    };
   }
 });
 </script>
@@ -69,8 +111,8 @@ export default defineComponent({
 
 .v21 {
   position: absolute;
-  margin-top: 100px;
-  margin-left: 60px;
+  margin-top: 110px;
+  margin-left: 70px;
 }
 
 .v22 {

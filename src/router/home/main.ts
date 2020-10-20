@@ -6,7 +6,7 @@ export default [
     meta: {
       auth: true,
       title: "吸鱼泵清污系统",
-      iocn: "hai",
+      iocn: "yang",
       keepAlive: true
     }
   }

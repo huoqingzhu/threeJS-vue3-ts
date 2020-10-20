@@ -1,4 +1,7 @@
 <template>
+<div class="zhushi">
+  <p>注释: <span>启动图标为绿色,关闭为红色</span></p>
+</div>
 <!--第一层 -->
 <div class="home">
   <div class="fex" style="margin-left: 35%;">
@@ -67,7 +70,7 @@
       <div class="fs2">NO.1养殖水舱</div>
       <img src="./img/shui.png" class="shui" alt="" />
       <div class="yLine" style="height:55px;margin-left:70px"></div>
-      <img src="./img/shu.png" alt="" style="margin-left:48px" />
+      <img :src="src1" alt="" style="margin-left:48px" />
       <div class="yLine" style="height:155px;margin-left:70px"></div>
     </div>
     <div class="yLine" style="height:465px;margin-left:100px;margin-top:-25px"></div>
@@ -83,14 +86,14 @@
       <div class="fs2">NO.2养殖水舱</div>
       <img src="./img/shui.png" class="shui" alt="" />
       <div class="yLine" style="height:55px;margin-left:70px"></div>
-      <img src="./img/shu.png" alt="" style="margin-left:48px" />
+      <img :src="src2" alt="" style="margin-left:48px" />
       <div class="yLine" style="height:55px;margin-left:70px"></div>
     </div>
     <div style="margin-left:80px">
       <div class="fs2">NO.3养殖水舱</div>
       <img src="./img/shui.png" class="shui" alt="" />
       <div class="yLine" style="height:55px;margin-left:70px"></div>
-      <img src="./img/shu.png" alt="" style="margin-left:48px" />
+      <img :src="src3" alt="" style="margin-left:48px" />
       <div class="yLine" style="height:155px;margin-left:70px"></div>
     </div>
   </div>
@@ -102,33 +105,16 @@
     <div class="line" style="width:435px;margin-left:55px"></div>
   </div>
 </div>
-<!--
-<div class="butt">
-  <div class="v10">
-    <img src="./img/jiao.png" alt="" />
-    <img src="./img/jiao.png" class="v11" alt="" />
-  </div>
-  <div class="v12">
-    <p>吸鱼泵排污设备控制箱：</p>
-  </div>
-
-  <div class="v10" style="margin-top:20px">
-    <img src="./img/jiao.png" style="transform: rotate(-90deg)" alt="" />
-
-    <img src="./img/jiao.png" style="transform: rotate(-180deg)" alt="" />
-  </div>
-
-</div>
-  第九层 -->
+第九层 -->
 <div class="butt">
   <Card>
     <div style="padding: 20px;">
       <div><span>吸鱼泵排污设备控制箱：</span></div>
-      <Police title="自动模式"></Police>
-      <Police title="手动模式"></Police>
-      <Police title="异常报警"></Police>
-      <Police title="真空泵启动"></Police>
-      <Police title="真空泵启动完成"></Police>
+      <Police title="自动模式" color="#70bc3a" num="56"></Police>
+      <Police title="手动模式" color="#70bc3a" num="56"></Police>
+      <Police title="异常报警" num="57"></Police>
+      <Police title="真空泵启动" num="59"></Police>
+      <Police title="真空泵启动完成" num="60"></Police>
     </div>
   </Card>
 </div>
@@ -137,22 +123,48 @@
 <script lang="ts">
 import {
   defineComponent,
-  onMounted,
-  ref,
-  nextTick,
-  toRefs
+  toRefs,
+  computed
 } from "vue";
 import {
   fish
 } from "./hooks";
-
+import {
+  useStore
+} from "vuex";
 export default defineComponent({
-  setup(a, b) {
+  setup(a: any) {
     const {
       State
     } = fish();
+    const store = useStore();
+    const src1 = computed(() => {
+      if (Boolean(store.state.listData[7])) {
+        return require("./img/shu1.png");
+      } else {
+        return require("./img/shu2.png");
+      }
+    });
+    const src2 = computed(() => {
+      if (Boolean(store.state.listData[9])) {
+        return require("./img/shu1.png");
+      } else {
+        return require("./img/shu2.png");
+      }
+    });
+    const src3 = computed(() => {
+      if (Boolean(store.state.listData[11])) {
+        return require("./img/shu1.png");
+      } else {
+        return require("./img/shu2.png");
+      }
+    });
+
     return {
-      ...toRefs(State)
+      ...toRefs(State),
+      src1,
+      src2,
+      src3
     };
   }
 });

@@ -15,3 +15,27 @@ export function getData(ids:string) {
     method: "get",
   });
 }
+// 报警数量及报警信息
+// 报警
+export function pol() {
+  return request({
+    url: "/timer/sec",
+    method: "get",
+  });
+}
+// /history/num
+export function historys(params:any) {
+  return request({
+    url: "/history/num",
+    method: "get",
+    params
+  });
+}
+// /alarm/search
+export function police(params:any) {
+  return request({
+    url: "/alarm/search",
+    method: "get",
+    params
+  });
+}
