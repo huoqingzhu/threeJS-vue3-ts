@@ -1,5 +1,5 @@
 <template>
-<div class="homes">
+<div class="homes" @click="fistPlay">
   <div class="left">
     <div>
       <img class="im" src="@/assets/qiyao.png" alt />
@@ -21,12 +21,15 @@
   <div class="title">中试船监测报警系统</div>
 
   <div class="right">
-    <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
-    <img src="@/assets/bao.png" style="margin-right:20px" alt="报警" />
+    <div>
+      <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" @click="clears" />
+      <img :src="src" style="margin-right:20px" alt="报警" @click="clear" />
+    </div>
     <a href="http://localhost:81">
       <img src="@/assets/she.png" alt="报警" />
     </a>
     <span class="time"> {{ date }} {{ time }}</span>
+    <div class="pol" v-if="policeNum > 0">({{ policeNum }})</div>
   </div>
 </div>
 </template>
@@ -43,7 +46,8 @@ import {
   ref,
   computed,
   watch,
-  onMounted
+  onMounted,
+  watchEffect
 } from "vue";
 import {
   useRouter,
@@ -61,6 +65,9 @@ import {
 import {
   pol
 } from "@/api/article";
+import {
+  message
+} from "ant-design-vue";
 export default defineComponent({
   components: {
     UserSwitchOutlined
@@ -83,6 +90,12 @@ export default defineComponent({
     let state = reactive({
       listTitle: routers
     });
+    const police = reactive({
+      policeName: "",
+      policeNum: 3,
+      open: false,
+      num: 0
+    });
     const router = useRouter();
     const route = reactive(useRoute());
     const K = ref(route.name);
@@ -91,6 +104,13 @@ export default defineComponent({
         if (val === K.value) return "bit";
         return "box";
       };
+    });
+    const src = computed(() => {
+      if (police.policeNum > 0) {
+        return require("@/assets/bao1.png");
+      } else {
+        return require("@/assets/bao.png");
+      }
     });
     //
     watch(
@@ -103,20 +123,79 @@ export default defineComponent({
       console.log(state.listTitle);
       router.push(val.path).catch(() => {});
     };
+    //  报警消音功能
+    const audio: any = new Audio();
+    audio.loop = "loop";
+    audio.src = require("@/assets/bj.mp3");
+    // 开始报警
+    const play = () => {
+      audio.play();
+      console.log("开始报警");
+    };
+    // 消除报警
+    const pause = () => {
+      audio.pause();
+      console.log("消除报警");
+    };
+    // 观察本地报警数量
+    watch(
+      () => police.policeNum,
+      (a, b) => {
+        if (a > 0) {
+          play();
+        } else {
+          pause();
+        }
+      }
+    );
     // 轮训获取报警条数
     const history = async () => {
-      await pol();
+      const res: any = await pol();
+      // 根据报警信息来判读未读的报警条数
+      if (res.alarm.data) {
+        if (res.alarm.data.name !== police.policeName) {
+          police.policeNum = police.policeNum + 1;
+        }
+      }
+      police.num = res.alarm.num;
     };
+    const clear = () => {
+      if (police.policeNum > 0) {
+        police.policeNum = 0;
+      } else {
+        message.warning("暂无报警,请勿消音");
+      }
+    };
+    const clears = () => {
+      if (police.num > 0) {
+        message.warning("还有报警未处理");
+      } else {
+        message.success("复位成功");
+      }
+    };
+    const fistPlay = () => {
+      if (!police.open) {
+        play();
+        pause();
+        police.open = true;
+      }
+    };
+    onMounted(() => {});
     const {
       getList
     } = Rotations(history);
     getList();
     return {
+      ...toRefs(police),
       ...toRefs(timeState),
       ...toRefs(state),
       choose,
       zhong,
-      K
+      K,
+      src,
+      clear,
+      fistPlay,
+      clears
     };
   }
 });
@@ -171,9 +250,19 @@ export default defineComponent({
 
 .right {
   height: 100px;
+  display: flex;
   line-height: 100px;
   margin-left: 580px;
   z-index: 2;
+  position: relative;
+}
+
+.pol {
+  position: absolute;
+  margin-left: 130px;
+  font-size: 24px;
+  color: red;
+  margin-top: -20px;
 }
 
 .title {

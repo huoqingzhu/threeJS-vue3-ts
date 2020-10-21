@@ -88,6 +88,7 @@ export default defineComponent({
     };
   }
 });
+
 // 配置养殖水舱参数
 // 养殖水舱三
 const prop3 = [{
