@@ -3,6 +3,7 @@
   <div>{{ title }}</div>
   <div class="fex">
     <div class="fex">
+      <span class="value"> {{ $store.state.listData[value] || 0 }}</span>
       高
       <div class="po" :style="style"></div>
     </div>
@@ -33,6 +34,10 @@ export default defineComponent({
       default: "标题"
     },
     num: {
+      type: String,
+      default: "1"
+    },
+    value: {
       type: String,
       default: "1"
     }
@@ -93,5 +98,10 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.value {
+  color: aqua;
+  margin-right: 5px;
 }
 </style>

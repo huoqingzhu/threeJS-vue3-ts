@@ -92,7 +92,7 @@ export default defineComponent({
     });
     const police = reactive({
       policeName: "",
-      policeNum: 3,
+      policeNum: 0,
       open: false,
       num: 0
     });

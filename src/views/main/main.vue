@@ -98,8 +98,8 @@ const prop3 = [{
   },
   {
     title: "YZV39",
-    open: "25",
-    off: "26"
+    open: "21",
+    off: "22"
   }
 ];
 // 养殖水舱2

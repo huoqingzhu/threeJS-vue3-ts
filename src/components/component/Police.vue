@@ -37,12 +37,22 @@ export default defineComponent({
     type: {
       type: String,
       default: "1"
+    },
+    normal: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props: any) {
     const store = useStore();
     const style = computed(() => {
       if (Boolean(store.state.listData[props.num])) {
+        if (!props.normal) {
+          console.log("测试");
+          return {
+            background: "#ccc"
+          };
+        }
         if (props.color === "red") {
           return {
             background: `${props.color}`,
@@ -54,6 +64,11 @@ export default defineComponent({
           };
         }
       } else {
+        if (!props.normal) {
+          return {
+            background: `${props.color}`
+          };
+        }
         return {
           background: "#ccc"
         };

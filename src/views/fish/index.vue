@@ -111,7 +111,7 @@
     <div style="padding: 20px;">
       <div><span>吸鱼泵排污设备控制箱：</span></div>
       <Police title="自动模式" color="#70bc3a" num="56"></Police>
-      <Police title="手动模式" color="#70bc3a" num="56"></Police>
+      <Police title="手动模式" color="#70bc3a" num="56" :normal="false"></Police>
       <Police title="异常报警" num="57"></Police>
       <Police title="真空泵启动" num="59" color="#70bc3a"></Police>
       <Police title="真空泵启动完成" num="60" color="#70bc3a"></Police>

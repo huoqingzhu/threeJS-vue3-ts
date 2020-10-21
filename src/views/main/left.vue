@@ -90,7 +90,7 @@ export default defineComponent({
       }
     });
     const clas = computed(() => {
-      if (Boolean(store.state.listData[props.num[1]])) {
+      if (Boolean(store.state.listData[props.num[0]])) {
         return "circular1";
       } else {
         return "circular";

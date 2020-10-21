@@ -6,39 +6,39 @@
   <div class="box">
     <Card>
       <div class="boxs">
-        <div class="left" style="display:block;margin-top:-20px">
+        <div class="left" style="display:block;margin-top:-20px;width:300px">
           <div class="v1" style="padding:0">
-            <Polices title="1#溶解氧信号" num="35"></Polices>
-            <Polices title="1#温度信号" num="36"></Polices>
-            <Polices title="1#PH信号" num="37"></Polices>
-            <Polices title="1#盐度信号" num="38"></Polices>
+            <Polices title="1#溶解氧信号" num="135" value="35"></Polices>
+            <Polices title="1#温度信号" num="136" value="36"></Polices>
+            <Polices title="1#PH信号" num="137" value="37"></Polices>
+            <Polices title="1#盐度信号" num="138" value="38"></Polices>
           </div>
           <div class="v1" style="padding:0;margin-top:80px">
-            <Polices title="2#溶解氧信号" num="39"></Polices>
-            <Polices title="2#温度信号" num="40"></Polices>
-            <Polices title="2#PH信号" num="41"></Polices>
-            <Polices title="2#盐度信号" num="42"></Polices>
+            <Polices title="2#溶解氧信号" num="139" value="39"></Polices>
+            <Polices title="2#温度信号" num="140" value="40"></Polices>
+            <Polices title="2#PH信号" num="141" value="41"></Polices>
+            <Polices title="2#盐度信号" num="142" value="42"></Polices>
           </div>
         </div>
-        <div class="right" style="display:flex;padding:0;margin-left:30px">
+        <div class="right" style="display:flex;padding:0;margin-left:0px">
           <div>
             <div>水质传感器</div>
             <div>
               <img src="./img/4.png" alt="" style="width:150px;height:150px;margin-top:50px" />
             </div>
           </div>
-          <div style="margin-top:-20px;font-size: 20px;margin-left:100px;width:250px">
+          <div style="margin-top:-20px;font-size: 20px;margin-left:100px;width:300px">
             <div class="v1" style="padding:0">
-              <Polices title="3#溶解氧信号" num="43"></Polices>
-              <Polices title="3#温度信号" num="44"></Polices>
-              <Polices title="3#PH信号" num="45"></Polices>
-              <Polices title="3#盐度信号" num="46"></Polices>
+              <Polices title="3#溶解氧信号" num="143" value="43"></Polices>
+              <Polices title="3#温度信号" num="144" value="44"></Polices>
+              <Polices title="3#PH信号" num="145" value="45"></Polices>
+              <Polices title="3#盐度信号" num="146" value="46"></Polices>
             </div>
             <div class="v1" style="padding:0;margin-top:80px">
-              <Polices title="4#溶解氧信号" num="47"></Polices>
-              <Polices title="4#温度信号" num="48"></Polices>
-              <Polices title="4#PH信号" num="49"></Polices>
-              <Polices title="4#盐度信号" num="50"></Polices>
+              <Polices title="进水口溶解氧信号" num="147" value="47"></Polices>
+              <Polices title="进水口温度信号" num="148" value="48"></Polices>
+              <Polices title="进水口PH信号" num="149" value="49"></Polices>
+              <Polices title="进水口盐度信号" num="150" value="50"></Polices>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="left">
           <div class="v1">
             <Police title="运行" color="#70bc3a" num="64"></Police>
-            <Police title="综合故障报警" num="63"></Police>
+            <Police title="综合故障报警" num="65"></Police>
           </div>
         </div>
         <div class="right">
@@ -84,7 +84,7 @@
             <div style="margin-left:120px">
               <Police title="1#氧锥泵运行" color="#70bc3a" num="29"></Police>
               <Police title="1#氧锥泵过载" num="30"></Police>
-              <Police title="2#氧锥泵运行" num="31"></Police>
+              <Police title="2#氧锥泵运行" num="31" color="#70bc3a"></Police>
               <Police title="2#氧锥泵过载" num="32"></Police>
               <Police title="3#氧锥泵运行" num="33"></Police>
               <Police title="3#氧锥泵过载" num="34"></Police>
