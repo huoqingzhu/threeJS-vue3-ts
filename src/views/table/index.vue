@@ -1,20 +1,23 @@
 <template>
+<div class="zhushi">
+  <p>注释: <span>启动图标为绿色,关闭为红色</span></p>
+</div>
 <div class="about">
   <div class="box">
     <Card>
       <div class="boxs">
         <div class="left" style="display:block;margin-top:-20px">
           <div class="v1" style="padding:0">
-            <Polices title="1#溶解氧信号"></Polices>
-            <Polices title="1#温度信号"></Polices>
-            <Polices title="1#PH信号"></Polices>
-            <Polices title="1#盐度信号"></Polices>
+            <Polices title="1#溶解氧信号" num="35"></Polices>
+            <Polices title="1#温度信号" num="36"></Polices>
+            <Polices title="1#PH信号" num="37"></Polices>
+            <Polices title="1#盐度信号" num="38"></Polices>
           </div>
           <div class="v1" style="padding:0;margin-top:80px">
-            <Polices title="2#溶解氧信号"></Polices>
-            <Polices title="2#温度信号"></Polices>
-            <Polices title="2#PH信号"></Polices>
-            <Polices title="2#盐度信号"></Polices>
+            <Polices title="2#溶解氧信号" num="39"></Polices>
+            <Polices title="2#温度信号" num="40"></Polices>
+            <Polices title="2#PH信号" num="41"></Polices>
+            <Polices title="2#盐度信号" num="42"></Polices>
           </div>
         </div>
         <div class="right" style="display:flex;padding:0;margin-left:30px">
@@ -26,16 +29,16 @@
           </div>
           <div style="margin-top:-20px;font-size: 20px;margin-left:100px;width:250px">
             <div class="v1" style="padding:0">
-              <Polices title="3#溶解氧信号"></Polices>
-              <Polices title="3#温度信号"></Polices>
-              <Polices title="3#PH信号"></Polices>
-              <Polices title="3#盐度信号"></Polices>
+              <Polices title="3#溶解氧信号" num="43"></Polices>
+              <Polices title="3#温度信号" num="44"></Polices>
+              <Polices title="3#PH信号" num="45"></Polices>
+              <Polices title="3#盐度信号" num="46"></Polices>
             </div>
             <div class="v1" style="padding:0;margin-top:80px">
-              <Polices title="4#溶解氧信号"></Polices>
-              <Polices title="4#温度信号"></Polices>
-              <Polices title="4#PH信号"></Polices>
-              <Polices title="4#盐度信号"></Polices>
+              <Polices title="4#溶解氧信号" num="47"></Polices>
+              <Polices title="4#温度信号" num="48"></Polices>
+              <Polices title="4#PH信号" num="49"></Polices>
+              <Polices title="4#盐度信号" num="50"></Polices>
             </div>
           </div>
         </div>
@@ -65,8 +68,8 @@
       <div class="boxs">
         <div class="left">
           <div class="v1">
-            <Police title="制氧机氧气纯度报警"></Police>
-            <Police title="1#温度信号"></Police>
+            <Police title="制氧机氧气纯度：" type="" num="25"></Police>
+            <Police title="制氧机氧气压力：" type="" num="26"></Police>
             <Police title="制氧机氧气纯度报警" num="27"></Police>
             <Police title="制氧机氧气压力报警" num="28"></Police>
           </div>
@@ -122,6 +125,24 @@
   </div>
 </div>
 </template>
+
+<script lang="ts">
+import Vue, {
+  defineComponent,
+  reactive,
+  toRefs
+} from "vue";
+export default defineComponent({
+  setup() {
+    const state = reactive({
+      test: "12"
+    });
+    return {
+      ...toRefs(state)
+    };
+  }
+});
+</script>
 
 <style lang="less" scoped>
 .about {

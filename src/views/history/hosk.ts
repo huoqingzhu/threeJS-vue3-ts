@@ -1,10 +1,5 @@
-import { reactive ,onMounted, onBeforeUnmount,ref,toRef,nextTick} from "vue";
-import {useStore} from "vuex";
+import { reactive } from "vue";
 import {historys,police} from "@/api/article"
-interface Data {
-  historyData: any;
- 
-}
 const history = (): any => {
   const state= reactive({
     historyData: [{code:1,name:"点位1",value:12,unit:10,time:"2020"}],

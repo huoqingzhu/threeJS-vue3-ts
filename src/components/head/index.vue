@@ -19,12 +19,14 @@
   </div>
 
   <div class="title">中试船监测报警系统</div>
-  <div>
-    <div class="right">
-      <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
-      <img src="@/assets/bao.png" alt="报警" />
-      <span class="time"> {{ date }} {{ time }}</span>
-    </div>
+
+  <div class="right">
+    <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" />
+    <img src="@/assets/bao.png" style="margin-right:20px" alt="报警" />
+    <a href="http://localhost:81">
+      <img src="@/assets/she.png" alt="报警" />
+    </a>
+    <span class="time"> {{ date }} {{ time }}</span>
   </div>
 </div>
 </template>
@@ -170,7 +172,8 @@ export default defineComponent({
 .right {
   height: 100px;
   line-height: 100px;
-  margin-left: 630px;
+  margin-left: 580px;
+  z-index: 2;
 }
 
 .title {

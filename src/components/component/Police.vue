@@ -1,7 +1,10 @@
 <template>
 <div class="police">
-  <div>{{ title }}</div>
-  <div class="po" :style="style"></div>
+  <div>
+    {{ title }}
+    <span v-if="type !== '1'" class="value">{{ $store.state.listData[num] || 0 }} {{ type }}</span>
+  </div>
+  <div class="po" :style="style" v-if="type === '1'"></div>
 </div>
 </template>
 
@@ -30,17 +33,26 @@ export default defineComponent({
     num: {
       type: String,
       default: "1"
+    },
+    type: {
+      type: String,
+      default: "1"
     }
   },
   setup(props: any) {
     const store = useStore();
     const style = computed(() => {
-      console.log(props.num);
-      console.log(Boolean(store.state.listData[props.num]));
       if (Boolean(store.state.listData[props.num])) {
-        return {
-          background: `${props.color}`
-        };
+        if (props.color === "red") {
+          return {
+            background: `${props.color}`,
+            animation: "myAnimation 0.5s infinite"
+          };
+        } else {
+          return {
+            background: `${props.color}`
+          };
+        }
       } else {
         return {
           background: "#ccc"
@@ -55,6 +67,11 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.value {
+  margin-left: 10px;
+  color: #23b6ec;
+}
+
 .police {
   display: flex;
 

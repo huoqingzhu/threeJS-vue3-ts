@@ -8,10 +8,7 @@ const whiteList = ["/login", "/register"]; // 白名单列表
 
 router.beforeEach(async (to, from, next) => {
   // 设置页面标题
-
   document.title = to.meta.title;
-
-  // determine whether the user has logged in
   const hasToken = 1===1;
   if (hasToken) {
     if (to.path === "/login") {

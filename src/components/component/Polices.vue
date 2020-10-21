@@ -6,7 +6,7 @@
       高
       <div class="po" :style="style"></div>
     </div>
-    <div class="fex" style="margin-left:5px">
+    <div class="fex" style="margin-left:10px">
       低
       <div class="po" :style="styles"></div>
     </div>
@@ -32,10 +32,6 @@ export default defineComponent({
       type: String,
       default: "标题"
     },
-    color: {
-      type: String,
-      default: "red"
-    },
     num: {
       type: String,
       default: "1"
@@ -44,11 +40,10 @@ export default defineComponent({
   setup(props: any) {
     const store = useStore();
     const style = computed(() => {
-      console.log(props.num);
-      console.log(Boolean(store.state.listData[props.num]));
-      if (Boolean(store.state.listData[props.num])) {
+      if (store.state.listData[props.num] == 2) {
         return {
-          background: `${props.color}`
+          background: "red",
+          animation: "myAnimation 0.5s infinite"
         };
       } else {
         return {
@@ -57,11 +52,10 @@ export default defineComponent({
       }
     });
     const styles = computed(() => {
-      console.log(props.num);
-      console.log(Boolean(store.state.listData[props.num]));
-      if (!Boolean(store.state.listData[props.num])) {
+      if (store.state.listData[props.num] == 1) {
         return {
-          background: `${props.color}`
+          background: "red",
+          animation: "myAnimation 0.5s infinite"
         };
       } else {
         return {
@@ -86,6 +80,7 @@ export default defineComponent({
   color: 20px;
   color: #fff;
   font-size: 18px;
+  padding: 0 10px;
 }
 
 .po {
