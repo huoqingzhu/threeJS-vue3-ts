@@ -9,6 +9,11 @@
   </div>
   <div class="table" v-else>
     <a-table :columns="column2" :data-source="policeData" :loading="loading" :pagination="policePagination" :rowKey="record => record._id" bordered @change="policeChange">
+      <template v-slot:clear_time="{ text: clear_time }">
+        <span :class="clear_time.clear_time.length > 3 ? '' : 'col'">{{
+            clear_time.clear_time
+          }}</span>
+      </template>
     </a-table>
   </div>
 </div>
@@ -97,7 +102,9 @@ const column2 = [{
   {
     title: "消除时间",
     key: "clear_time",
-    dataIndex: "clear_time",
+    slots: {
+      customRender: "clear_time"
+    },
     align: "center"
   }
 ];
@@ -106,7 +113,9 @@ const column2 = [{
 <style lang="less" scoped>
 .table {
   width: 100%;
-  height: 900px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: #121c30;
 }
 
 .head {
@@ -129,5 +138,9 @@ const column2 = [{
 
 .off {
   color: rgb(47, 45, 45);
+}
+
+.col {
+  color: red;
 }
 </style>

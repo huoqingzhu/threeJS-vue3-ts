@@ -2,7 +2,7 @@
 <div class="homes" @click="fistPlay">
   <div class="left">
     <div>
-      <img class="im" src="@/assets/qiyao.png" alt />
+      <img class="im" src="@/assets/qiyao.png" alt @click="$router.go(0)" />
     </div>
     <template v-for="item in listTitle" :key="item.path">
       <div :class="zhong(item.meta.title)" @click="choose(item)">
@@ -23,7 +23,7 @@
   <div class="right">
     <div>
       <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" @click="clears" />
-      <img :src="src" style="margin-right:20px" alt="报警" @click="clear" />
+      <img :src="src" style="margin-right:30px" alt="报警" @click="clear" />
     </div>
     <a href="http://localhost:81">
       <img src="@/assets/she.png" alt="报警" />
@@ -138,16 +138,6 @@ export default defineComponent({
       console.log("消除报警");
     };
     // 观察本地报警数量
-    // watch(
-    //   () => police.policeNum,
-    //   (a, b) => {
-    //     if (a > 0) {
-    //       play();
-    //     } else {
-    //       pause();
-    //     }
-    //   }
-    // );
     // 轮训获取报警条数
     const history = async () => {
       const res: any = await pol();
@@ -157,6 +147,7 @@ export default defineComponent({
           police.policeName = res.alarm.data.name;
           police.policeNum = police.policeNum + 1;
           play();
+          store.commit("setTwinkle", true);
         }
       }
       police.num = res.alarm.num;
@@ -173,6 +164,7 @@ export default defineComponent({
       }
     };
     const clears = () => {
+      pause();
       if (police.num > 0) {
         police.policeNum = police.num;
         message.warning(`还有${police.num}条报警未处理`);
@@ -186,14 +178,15 @@ export default defineComponent({
       if (!police.open) {
         play();
         pause();
+        getList();
         police.open = true;
       }
     };
-    onMounted(() => {});
+    // 页面重启
     const {
       getList
     } = Rotations(history);
-    getList();
+
     return {
       ...toRefs(police),
       ...toRefs(timeState),
@@ -216,10 +209,12 @@ export default defineComponent({
 }
 
 .im {
+  margin-left: 15px;
   height: 50px;
   // line-height: 100px;
   // padding: 20px 0;
-  width: 220px;
+  width: 210px;
+  margin-right: 15px;
 }
 
 .left {
@@ -261,7 +256,7 @@ export default defineComponent({
   height: 100px;
   display: flex;
   line-height: 100px;
-  margin-left: 580px;
+  margin-left: 570px;
   z-index: 2;
   position: relative;
 }

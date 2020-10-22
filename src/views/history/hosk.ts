@@ -30,11 +30,14 @@ const history = (): any => {
       if(res.list.length>0){
         res.list.map((item:any)=>{
           item.time=formatDate(item.time*1000)
+         
         })
+        state.historyData=res.list||[]
+      state.historyPagination.total=res.pages*res.list.length
+      state.historyPagination.pageSize=res.list.length
       }
       
-      state.historyData=res.list||[]
-      state.historyPagination.total=res.count
+      
     })
   }
   const  historyChange=(pagination:any)=>{
@@ -42,6 +45,7 @@ const history = (): any => {
     state.historyPagination.pageSize = pagination.pageSize;
     state.historyParams.page_no = pagination.current - 1;
     state.historyParams.page_size = pagination.pageSize;
+    getHistory()
     
   }
   const  policeChange=(pagination:any)=>{
@@ -53,6 +57,9 @@ const history = (): any => {
     
   }
   const  formatDate=(inputTime:any)=>{
+     if(inputTime===0){
+       return "未消除"
+     }
     let date = new Date(inputTime);
     let y:any = date.getFullYear();
     let m:any = date.getMonth() + 1;
