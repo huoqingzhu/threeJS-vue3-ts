@@ -79,6 +79,7 @@ export default defineComponent({
   },
 
   setup() {
+    const store = useStore();
     // 获取时间
     const {
       timeState
@@ -120,7 +121,6 @@ export default defineComponent({
       }
     );
     const choose = (val: any) => {
-      console.log(state.listTitle);
       router.push(val.path).catch(() => {});
     };
     //  报警消音功能
@@ -138,39 +138,48 @@ export default defineComponent({
       console.log("消除报警");
     };
     // 观察本地报警数量
-    watch(
-      () => police.policeNum,
-      (a, b) => {
-        if (a > 0) {
-          play();
-        } else {
-          pause();
-        }
-      }
-    );
+    // watch(
+    //   () => police.policeNum,
+    //   (a, b) => {
+    //     if (a > 0) {
+    //       play();
+    //     } else {
+    //       pause();
+    //     }
+    //   }
+    // );
     // 轮训获取报警条数
     const history = async () => {
       const res: any = await pol();
       // 根据报警信息来判读未读的报警条数
       if (res.alarm.data) {
         if (res.alarm.data.name !== police.policeName) {
+          police.policeName = res.alarm.data.name;
           police.policeNum = police.policeNum + 1;
+          play();
         }
       }
       police.num = res.alarm.num;
     };
     const clear = () => {
       if (police.policeNum > 0) {
-        police.policeNum = 0;
+        pause();
+        store.commit("setTwinkle", false);
       } else {
+        if (police.num > 0) {
+          police.policeNum = police.num;
+        }
         message.warning("暂无报警,请勿消音");
       }
     };
     const clears = () => {
       if (police.num > 0) {
-        message.warning("还有报警未处理");
+        police.policeNum = police.num;
+        message.warning(`还有${police.num}条报警未处理`);
       } else {
         message.success("复位成功");
+        police.policeNum = 0;
+        police.policeName = "";
       }
     };
     const fistPlay = () => {
@@ -207,10 +216,10 @@ export default defineComponent({
 }
 
 .im {
-  height: 100px;
-  line-height: 100px;
-  padding: 20px 0;
-  width: 240px;
+  height: 50px;
+  // line-height: 100px;
+  // padding: 20px 0;
+  width: 220px;
 }
 
 .left {

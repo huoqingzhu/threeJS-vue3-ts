@@ -10,7 +10,6 @@ const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
 const children = loadRoutes(require.context("./home", false, /\.ts$/));
 // 把拿到的路由存到本地
 localStorage.setItem("router", JSON.stringify(children));
-console.log(children);
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",

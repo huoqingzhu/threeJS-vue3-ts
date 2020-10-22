@@ -26,7 +26,7 @@ export function pol() {
 // /history/num
 export function historys(params:any) {
   return request({
-    url: "/history/num",
+    url: "/history/search",
     method: "get",
     params
   });

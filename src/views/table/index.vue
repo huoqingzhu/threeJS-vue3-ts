@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="right" style="display:flex;padding:0;margin-left:0px">
-          <div>
+          <div style="margin-left:40px">
             <div>水质传感器</div>
             <div>
               <img src="./img/4.png" alt="" style="width:150px;height:150px;margin-top:50px" />
@@ -145,6 +145,16 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.zhushi {
+  margin-top: -40px;
+  color: #fff;
+  font-size: 18px;
+
+  span {
+    margin-left: 30px;
+  }
+}
+
 .about {
   width: 100%;
   height: 100%;

@@ -83,17 +83,21 @@ export default defineComponent({
   setup(props: any) {
     const store = useStore();
     const src = computed(() => {
-      if (Boolean(store.state.listData[props.num[0]])) {
+      if (Boolean(store.state.listData[props.num[1]])) {
+        return require("./img/open.png");
+      } else if (Boolean(store.state.listData[props.num[0]])) {
         return require("./img/open1.png");
       } else {
-        return require("./img/open.png");
+        return require("./img/ting.png");
       }
     });
     const clas = computed(() => {
-      if (Boolean(store.state.listData[props.num[0]])) {
+      if (Boolean(store.state.listData[props.num[1]])) {
+        return "circular";
+      } else if (Boolean(store.state.listData[props.num[0]])) {
         return "circular1";
       } else {
-        return "circular";
+        return "circular2";
       }
     });
     return {
@@ -134,6 +138,16 @@ export default defineComponent({
   width: 50px;
   height: 50px;
   border: 2px solid #00ff2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.circular2 {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #ccc;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -4,7 +4,10 @@ export default createStore({
     listData:{1:10},
     // 蜂鸣器报警
     police:0,
-
+    // 控制首页请求
+    open:false,
+    // 报警闪烁
+    twinkle:true
   },
   mutations: {
     setData(state,value){
@@ -12,12 +15,19 @@ export default createStore({
     },
     pliceChange(state,value){
       state.police=value
+    },
+    openChange(state){
+      state.open=true
+    },
+    setTwinkle(state,value){
+      state.twinkle=value
     }
   },
   actions: {
     setData(context,value){
       context.commit('setData',value)
     },
+    
     pliceChange(context,value){
          if(context.state.police===0){
              console.log("发送报警")

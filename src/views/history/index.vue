@@ -8,7 +8,8 @@
     <a-table :columns="columns" :data-source="historyData" :loading="loading" :pagination="historyPagination" :rowKey="record => record._id" @change="historyChange" bordered></a-table>
   </div>
   <div class="table" v-else>
-    <a-table :columns="column2" :data-source="policeData" :loading="loading" :pagination="policePagination" :rowKey="record => record._id" bordered @change="policeChange"></a-table>
+    <a-table :columns="column2" :data-source="policeData" :loading="loading" :pagination="policePagination" :rowKey="record => record._id" bordered @change="policeChange">
+    </a-table>
   </div>
 </div>
 </template>
@@ -30,7 +31,8 @@ export default defineComponent({
       getPolice,
       change,
       historyChange,
-      policeChange
+      policeChange,
+      formatDate
     } = history();
     getHistory();
     getPolice();
@@ -42,6 +44,7 @@ export default defineComponent({
       getPolice,
       historyChange,
       policeChange,
+      formatDate,
       ...toRefs(state)
     };
   }
@@ -64,12 +67,7 @@ const columns = [{
     dataIndex: "value",
     align: "center"
   },
-  {
-    title: "单位",
-    key: "unit",
-    dataIndex: "unit",
-    align: "center"
-  },
+
   {
     title: "时间",
     key: "time",
@@ -89,12 +87,7 @@ const column2 = [{
     dataIndex: "name",
     align: "center"
   },
-  {
-    title: "报警状态",
-    key: "visits",
-    dataIndex: "visits",
-    align: "center"
-  },
+
   {
     title: "触发时间",
     key: "happen_time",

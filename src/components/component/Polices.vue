@@ -46,10 +46,16 @@ export default defineComponent({
     const store = useStore();
     const style = computed(() => {
       if (store.state.listData[props.num] == 2) {
-        return {
-          background: "red",
-          animation: "myAnimation 0.5s infinite"
-        };
+        if (store.state.twinkle) {
+          return {
+            background: "red",
+            animation: "myAnimation 0.5s infinite"
+          };
+        } else {
+          return {
+            background: "red"
+          };
+        }
       } else {
         return {
           background: "#ccc"
@@ -58,10 +64,16 @@ export default defineComponent({
     });
     const styles = computed(() => {
       if (store.state.listData[props.num] == 1) {
-        return {
-          background: "red",
-          animation: "myAnimation 0.5s infinite"
-        };
+        if (store.state.twinkle) {
+          return {
+            background: "red",
+            animation: "myAnimation 0.5s infinite"
+          };
+        } else {
+          return {
+            background: "red"
+          };
+        }
       } else {
         return {
           background: "#ccc"

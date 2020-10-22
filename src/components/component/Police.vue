@@ -54,10 +54,16 @@ export default defineComponent({
           };
         }
         if (props.color === "red") {
-          return {
-            background: `${props.color}`,
-            animation: "myAnimation 0.5s infinite"
-          };
+          if (store.state.twinkle) {
+            return {
+              background: "red",
+              animation: "myAnimation 0.5s infinite"
+            };
+          } else {
+            return {
+              background: "red"
+            };
+          }
         } else {
           return {
             background: `${props.color}`

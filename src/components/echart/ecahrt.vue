@@ -81,8 +81,6 @@ export default defineComponent({
           } else {
             // 滚动
             sandi.dataZoom(params);
-            console.log(params.start);
-            console.log(params.end);
             this.$store.commit("setVoordinate", {
               start: params.start,
               end: params.end

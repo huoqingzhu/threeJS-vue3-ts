@@ -24,12 +24,10 @@ const updateTime=()=> {
       data.getMinutes().toString().padStart(2, "0") +
       ":" +
       data.getSeconds().toString().padStart(2, "0"); // 修改数据date
-    // console.log(_this.time);
   }, 1000);
 }
 onMounted(() => {
   updateTime()
-  console.log(timeState.timeInterval)
 })
 onBeforeUnmount(()=>{
   clearInterval(timeState.timeInterval)
@@ -64,5 +62,27 @@ const Rotations=(fn:any,time=1)=>{
     }, time*1000);
   }
 return {getList,clear}
+}
+/**
+ * 转化为时间字符串
+ * @param {Date|number} date - Date 对象或时间戳(ms)
+ * @param {boolean} [isFull=false] - 是否为完整日期时间
+ * @param {string} [connector='-'] - 连接符
+ * @returns {string} - yyyy-MM-dd
+ */
+const formatDate=(inputTime:any)=>{
+  let date = new Date(inputTime);
+  let y:any = date.getFullYear();
+  let m:any = date.getMonth() + 1;
+  m = m < 10 ? "0" + m : m;
+  let d:any = date.getDate();
+  d = d < 10 ? "0" + d : d;
+  let h:any = date.getHours();
+  h = h < 10 ? "0" + h : h;
+  let minute:any = date.getMinutes();
+  let second:any = date.getSeconds();
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+  return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
 }
 export {time,Rotations}
