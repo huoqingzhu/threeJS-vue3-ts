@@ -2,7 +2,7 @@ import { reactive } from "vue";
 import {historys,police} from "@/api/article"
 const history = (): any => {
   const state= reactive({
-    historyData: [{code:1,name:"点位1",value:12,unit:10,time:"2020"}],
+    historyData: [],
     policeData:[],
     loading: false,
     switchs:true,
