@@ -2,11 +2,11 @@
 export default [
   {
     path: "/home",
-    name: "海水养殖系统",
+    name: "组合API",
     component: () => import("@/views/main/main.vue"),
     meta: {
       auth: true,
-      title: "海水养殖系统",
+      title: "组合API",
       iocn: "hai",
       keepAlive: true
     }

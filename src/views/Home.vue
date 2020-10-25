@@ -43,7 +43,7 @@ export default defineComponent({
     position: fixed;
     top: 0;
     width: 100%;
-    height: 100px;
+    height: 1rem;
     // line-height: 100px;
     background-color: #fff;
     // box-shadow: 0px 3px 3px #ccc;

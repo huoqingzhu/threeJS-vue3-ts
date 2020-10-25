@@ -1,7 +1,7 @@
-import { reactive ,onMounted, onBeforeUnmount,ref,toRef} from "vue";
+import { reactive ,onMounted, onBeforeUnmount,ref,toRef,computed,watch,watchEffect} from "vue";
 import {useStore} from "vuex";
 import {
-  getData
+  article
 } from "@/api/article";
 import {
   Rotations
@@ -10,36 +10,53 @@ import {
   message
 } from "ant-design-vue";
 interface Data {
+  watchChange: any;
   listData: any;
   name: string;
 }
 const mapHosk = (): any => {
   const state: Data = reactive({
-    listData:{1:30},
-    name: "请求数据",
-    open:false
-   
+    listData:[],
+    name: "计算属性",
+    open:false,
+    watchChange:{
+      name:"观察属性",
+      age:18,
+      hobby:[1,2,4,5]
+    }
   });
   
     const store = useStore();
     const fn = () => {
-        getData("1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150").then(res => {
-          store.commit("setData", res.data);
+      article().then((res:any) => {
+         state.listData=res
+          
         }).catch(()=>{
           message.error("服务器错误！")
         })     
     };
-
+    watch(state.watchChange,() => {
+    console.log("3.x变化了")
+    },{deep: true, 
+      immediate: false, })
+    watchEffect(() => console.log(state.watchChange.age))
+  // 只发起  一次 轮训请求
      if(!store.state.open){
       const {
         getList,
       } = Rotations(fn);
       getList();
       store.commit("openChange")
+   
      }
+     const setColor=computed(()=>{
+       return (value:any)=>{
+           return `${state.name}${value}`
+       }
+     })
   return {
     state, 
-    
+    setColor
   };
 };
 export { mapHosk };

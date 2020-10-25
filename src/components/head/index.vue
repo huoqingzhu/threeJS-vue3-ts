@@ -2,32 +2,30 @@
 <div class="homes" @click="fistPlay">
   <div class="left">
     <div>
-      <img class="im" src="@/assets/qiyao.png" alt @click="$router.go(0)" />
+      <img class="im" src="@/assets/logo.png" alt @click="$router.go(0)" />
     </div>
     <template v-for="item in listTitle" :key="item.path">
       <div :class="zhong(item.meta.title)" @click="choose(item)">
-        <div style=" text-align: center;margin:15px">
+        <div style=" text-align: center;margin:10px">
           <img :src="
                 K === item.name
                   ? require(`@/assets/${item.meta.iocn}1.png`)
                   : require(`@/assets/${item.meta.iocn}.png`)
-              " :alt="item.meta.iocn" />
+              " :alt="item.meta.iocn" class="imgs" />
         </div>
         <div style=" text-align: center;">{{ item.name }}</div>
       </div>
     </template>
   </div>
 
-  <div class="title">中试船监测报警系统</div>
+  <div class="title">vue3+TS+ant</div>
 
   <div class="right">
     <div>
-      <img style="margin-right:20px" src="@/assets/fu.png" alt="报警" @click="clears" />
-      <img :src="src" style="margin-right:30px" alt="报警" @click="clear" />
+      <img style="margin-right:20px" src="@/assets/fu.png" class="imgs" alt="报警" @click="clears" />
+      <img :src="src" style="margin-right:30px" alt="报警" class="imgs" @click="clear" />
     </div>
-    <a href="http://localhost:81">
-      <img src="@/assets/she.png" alt="报警" />
-    </a>
+
     <span class="time"> {{ date }} {{ time }}</span>
     <div class="pol" v-if="policeNum > 0">({{ policeNum }})</div>
   </div>
@@ -112,8 +110,11 @@ export default defineComponent({
       } else {
         return require("@/assets/bao.png");
       }
+      police.policeNum > 0 ?
+        require("@/assets/bao1.png") :
+        require("@/assets/bao.png");
     });
-    //
+
     watch(
       () => route.name,
       (a, b) => {
@@ -178,7 +179,7 @@ export default defineComponent({
       if (!police.open) {
         play();
         pause();
-        getList();
+        // getList();
         police.open = true;
       }
     };
@@ -211,52 +212,51 @@ export default defineComponent({
 .im {
   margin-left: 15px;
   height: 50px;
-  // line-height: 100px;
-  // padding: 20px 0;
-  width: 210px;
+  width: 100px;
   margin-right: 15px;
 }
 
 .left {
   display: flex;
-  height: 100px;
+  height: 1rem;
   align-items: center;
   color: #000;
   z-index: 1;
 }
 
 .bit {
-  width: 120px;
+  width: 1.2rem;
+  height: 1rem;
   border: 1px solid #ccc;
   margin: 0 auto;
-
   border: 1px solid #00b3f5;
   border-top: none;
   border-bottom: none;
   color: #00b3f5 !important;
 }
 
-.time {
-  font-size: 30px;
-  margin-left: 10px;
-  color: #2c78d4;
-}
-
 .box {
-  width: 120px;
+  width: 1.2rem;
   border: 1px solid #ccc;
   border-top: none;
   border-bottom: none;
   margin: 0 auto;
+  height: 1rem;
   // bordesr: 1px solid #ccc;
   color: #000 !important;
 }
 
+.time {
+  font-size: 0.3rem;
+  margin-left: 10px;
+  color: #2c78d4;
+}
+
 .right {
-  height: 100px;
+  height: 1rem;
   display: flex;
-  line-height: 100px;
-  margin-left: 570px;
+  line-height: 1rem;
+  margin-left: 6rem;
   z-index: 2;
   position: relative;
 }
@@ -269,14 +269,19 @@ export default defineComponent({
   margin-top: -20px;
 }
 
+.imgs {
+  max-height: 0.5rem;
+  max-width: 0.5rem;
+}
+
 .title {
   position: absolute;
   width: 100%;
   text-align: center;
-  font-size: 50px;
+  font-size: 0.5rem;
   z-index: 0;
-  height: 100px;
-  line-height: 100px;
+  height: 1rem;
+  line-height: 1rem;
   // letter-spacing: 15px;
   color: #436894;
   font-weight: 700;

@@ -1,14 +1,30 @@
-import { reactive } from "vue";
-import {useStore} from "vuex";
-const fish = (): any => {
-  const State= reactive({
-    listData:{}
-  })
-  const store = useStore();
-  State.listData=store.state.listData
+import {customRef} from "vue";
 
+import {
+  article
+} from "@/api/article";
+function myRef() {
+  // customRef 有两个毁掉函数
+  return customRef((track, trigger) => {
+    return {
+   async get() {
+        track();
+       const data = await article()
+       console.log(data)
+        return data
+      },
+      set(newValue) {
+        trigger()
+        return newValue
+      },
+    };
+  });
+}
+const fish = (): any => {
+ 
+  const listData=myRef()
   return {
-    State, 
+    listData, 
   };
 };
 export { fish };

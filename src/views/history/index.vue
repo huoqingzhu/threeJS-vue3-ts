@@ -1,21 +1,6 @@
 <template>
 <div>
-  <div class="head">
-    <a-button @click="change(true)" :class="switchs ? 'on' : 'off'">历史数据</a-button>
-    <a-button @click="change(false)" :class="switchs ? 'off' : 'on'">报警记录</a-button>
-  </div>
-  <div class="table" v-if="switchs">
-    <a-table :columns="columns" :data-source="historyData" :loading="loading" :pagination="historyPagination" :rowKey="record => record._id" @change="historyChange" bordered></a-table>
-  </div>
-  <div class="table" v-else>
-    <a-table :columns="column2" :data-source="policeData" :loading="loading" :pagination="policePagination" :rowKey="record => record._id" bordered @change="policeChange">
-      <template v-slot:clear_time="{ text: clear_time }">
-        <span :class="clear_time.clear_time.length > 3 ? '' : 'col'">{{
-            clear_time.clear_time
-          }}</span>
-      </template>
-    </a-table>
-  </div>
+  <a-table :columns="columns" :data-source="historyData" :loading="loading" :pagination="historyPagination" :rowKey="record => record._id" @change="historyChange" bordered></a-table>
 </div>
 </template>
 
@@ -33,22 +18,16 @@ export default defineComponent({
     const {
       state,
       getHistory,
-      getPolice,
       change,
       historyChange,
-      policeChange,
       formatDate
     } = history();
     getHistory();
-    getPolice();
     return {
       columns,
-      column2,
       change,
       getHistory,
-      getPolice,
       historyChange,
-      policeChange,
       formatDate,
       ...toRefs(state)
     };
@@ -77,34 +56,6 @@ const columns = [{
     title: "时间",
     key: "time",
     dataIndex: "time",
-    align: "center"
-  }
-];
-const column2 = [{
-    title: "报警级别",
-    key: "level",
-    dataIndex: "level",
-    align: "center"
-  },
-  {
-    title: "报警名称",
-    key: "name",
-    dataIndex: "name",
-    align: "center"
-  },
-
-  {
-    title: "触发时间",
-    key: "happen_time",
-    dataIndex: "happen_time",
-    align: "center"
-  },
-  {
-    title: "消除时间",
-    key: "clear_time",
-    slots: {
-      customRender: "clear_time"
-    },
     align: "center"
   }
 ];
