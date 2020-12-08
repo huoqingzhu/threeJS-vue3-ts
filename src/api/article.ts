@@ -8,10 +8,9 @@ export function article() {
   });
 }
 // 请求数据data/main
-export function getData(ids:string) {
+export function getData(url:string) {
   return request({
-    url: "/data/get",
-    params: { id: ids },
+    url: url,
     method: "get",
   });
 }
@@ -26,7 +25,7 @@ export function pol() {
 // /history/num
 export function historys(params:any) {
   return request({
-    url: "/history/search",
+    url: "/profile",
     method: "get",
     params
   });

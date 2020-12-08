@@ -1,7 +1,7 @@
 <template>
-<div>
-  <div ref="charts" :style="styles"></div>
-</div>
+  <div>
+    <div ref="charts" :style="styles"></div>
+  </div>
 </template>
 
 <script>
@@ -16,9 +16,7 @@ import "echarts/lib/component/legendScroll";
 import "echarts/lib/component/title";
 import "echarts/lib/component/tooltip";
 import "echarts/lib/component/dataZoom";
-import {
-  defineComponent
-} from "vue";
+import { defineComponent } from "vue";
 export default defineComponent({
   name: "TongJi",
   props: {
@@ -26,21 +24,21 @@ export default defineComponent({
       type: Object,
       default: () => ({
         width: "100%",
-        height: "100%"
-      })
+        height: "100%",
+      }),
     },
     option: {
-      type: Object
+      type: Object,
     },
     isShow: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
       num: true,
-      myCharts: null
+      myCharts: null,
     };
   },
   // watch: {
@@ -59,21 +57,22 @@ export default defineComponent({
         }, 20);
       });
       if (this.num) {
-        this.myCharts.on("click", params => {
+        this.myCharts.on("click", (params) => {
           sandi.trigger(params);
         });
-        this.myCharts.getZr().on("mousemove", params => {
+        this.myCharts.getZr().on("mousemove", (params) => {
           // hove事件
           const pointInPixel = [params.offsetX, params.offsetY];
           if (this.myCharts.containPixel("grid", pointInPixel)) {
-            const xIndex = this.myCharts.convertFromPixel({
-                seriesIndex: 0
+            const xIndex = this.myCharts.convertFromPixel(
+              {
+                seriesIndex: 0,
               },
               [params.offsetX, params.offsetY]
             )[0];
           }
         });
-        this.myCharts.on("dataZoom", params => {
+        this.myCharts.on("dataZoom", (params) => {
           // 滚动/缩放事件
           if (params.batch) {
             // 缩放
@@ -83,7 +82,7 @@ export default defineComponent({
             sandi.dataZoom(params);
             this.$store.commit("setVoordinate", {
               start: params.start,
-              end: params.end
+              end: params.end,
             });
           }
         });
@@ -100,7 +99,7 @@ export default defineComponent({
     },
     dataZoom(params) {
       this.$emit("dataZoomEvent", params);
-    }
-  }
+    },
+  },
 });
 </script>

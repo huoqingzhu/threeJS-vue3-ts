@@ -1,33 +1,29 @@
 <template>
-<!--onselectstart="return false" -->
-<div class="container">
-  <div class="Tabbar">
-    <Header></Header>
+  <!--onselectstart="return false" -->
+  <div class="container">
+    <div class="Tabbar">
+      <Header></Header>
+    </div>
+    <div class="home">
+      <RouterView />
+    </div>
   </div>
-  <div class="home">
-    <RouterView />
-  </div>
-</div>
 </template>
 
 <script lang="ts">
-import Header from "../components/head/index.vue";
+import Header from "../components/head/indexs.vue";
 
 // eslint-disable-next-line prettier/prettier
-import {
-  defineComponent,
-  reactive,
-  toRefs
-} from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 // eslint-disable-next-line prettier/prettier
 import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  setup
+  setup,
 } from "vue-class-component";
 export default defineComponent({
   components: {
-    Header
-  }
+    Header,
+  },
 });
 </script>
 
@@ -37,23 +33,23 @@ export default defineComponent({
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #121c30;
+  background-color: #fff;
 
   .Tabbar {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 1rem;
+    // height: 0.6rem;
     // line-height: 100px;
-    background-color: #fff;
-    // box-shadow: 0px 3px 3px #ccc;
+    background-color: #ccc;
+    box-shadow: 0px 3px 3px rgb(102, 190, 171);
     z-index: 10;
   }
 
   .home {
     width: 100%;
-    height: 85%;
-    margin-top: 160px;
+    margin-top: 0.6rem;
+    height: 100%-1rem;
     z-index: 1;
   }
 

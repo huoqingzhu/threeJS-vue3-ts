@@ -2,12 +2,12 @@
 export default [
   {
     path: "/history",
-    name: "历史数据",
+    name: "游戏设置",
     component: () => import("@/views/history/index.vue"),
     meta: {
       auth: true,
-      title: "历史数据",
-      iocn: "history",
+      title: "游戏设置",
+      iocn: "SettingOutlined",
       keepAlive: true
     }
   }

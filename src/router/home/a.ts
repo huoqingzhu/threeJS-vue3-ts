@@ -2,13 +2,14 @@
 export default [
   {
     path: "/home",
-    name: "组合API",
+    name: "首页",
     component: () => import("@/views/main/main.vue"),
     meta: {
       auth: true,
-      title: "组合API",
-      iocn: "hai",
-      keepAlive: true
-    }
+      title: "首页",
+      keepAlive: true,
+      iocn: "AppstoreOutlined",
+    },
+ 
   }
 ];

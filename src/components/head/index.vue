@@ -1,41 +1,55 @@
 <template>
-<div class="homes" @click="fistPlay">
-  <div class="left">
-    <div>
-      <img class="im" src="@/assets/logo.png" alt @click="$router.go(0)" />
-    </div>
-    <template v-for="item in listTitle" :key="item.path">
-      <div :class="zhong(item.meta.title)" @click="choose(item)">
-        <div style=" text-align: center;margin:10px">
-          <img :src="
+  <div class="homes" @click="fistPlay">
+    <div class="left">
+      <div>
+        <img class="im" src="@/assets/logo.png" alt @click="$router.go(0)" />
+      </div>
+      <template v-for="item in listTitle" :key="item.path">
+        <div :class="zhong(item.meta.title)" @click="choose(item)">
+          <div style="text-align: center; margin: 10px">
+            <img
+              :src="
                 K === item.name
                   ? require(`@/assets/${item.meta.iocn}1.png`)
                   : require(`@/assets/${item.meta.iocn}.png`)
-              " :alt="item.meta.iocn" class="imgs" />
+              "
+              :alt="item.meta.iocn"
+              class="imgs"
+            />
+          </div>
+          <div style="text-align: center">{{ item.name }}</div>
         </div>
-        <div style=" text-align: center;">{{ item.name }}</div>
-      </div>
-    </template>
-  </div>
-
-  <div class="title">vue3+TS+ant</div>
-
-  <div class="right">
-    <div>
-      <img style="margin-right:20px" src="@/assets/fu.png" class="imgs" alt="报警" @click="clears" />
-      <img :src="src" style="margin-right:30px" alt="报警" class="imgs" @click="clear" />
+      </template>
     </div>
 
-    <span class="time"> {{ date }} {{ time }}</span>
-    <div class="pol" v-if="policeNum > 0">({{ policeNum }})</div>
+    <div class="title">vue3+TS+ant</div>
+
+    <div class="right">
+      <div>
+        <img
+          style="margin-right: 20px"
+          src="@/assets/fu.png"
+          class="imgs"
+          alt="报警"
+          @click="clears"
+        />
+        <img
+          :src="src"
+          style="margin-right: 30px"
+          alt="报警"
+          class="imgs"
+          @click="clear"
+        />
+      </div>
+
+      <span class="time"> {{ date }} {{ time }}</span>
+      <div class="pol" v-if="policeNum > 0">({{ policeNum }})</div>
+    </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
-import {
-  UserSwitchOutlined
-} from "@ant-design/icons-vue";
+import { UserSwitchOutlined } from "@ant-design/icons-vue";
 
 import {
   defineComponent,
@@ -45,55 +59,40 @@ import {
   computed,
   watch,
   onMounted,
-  watchEffect
+  watchEffect,
 } from "vue";
-import {
-  useRouter,
-  useRoute
-} from "vue-router";
-import {
-  Rotations
-} from "@/hooks/index";
-import {
-  useStore
-} from "vuex";
-import {
-  time
-} from "@/hooks/index";
-import {
-  pol
-} from "@/api/article";
-import {
-  message
-} from "ant-design-vue";
+import { useRouter, useRoute } from "vue-router";
+import { Rotations } from "@/hooks/index";
+import { useStore } from "vuex";
+import { time } from "@/hooks/index";
+import { pol } from "@/api/article";
+import { message } from "ant-design-vue";
 export default defineComponent({
   components: {
-    UserSwitchOutlined
+    UserSwitchOutlined,
   },
   data() {
     return {
-      title: "海水养殖系统"
+      title: "海水养殖系统",
     };
   },
 
   setup() {
     const store = useStore();
     // 获取时间
-    const {
-      timeState
-    } = time();
+    const { timeState } = time();
     let routers = {};
     let a: any;
     a = localStorage.getItem("router");
     routers = JSON.parse(a);
     let state = reactive({
-      listTitle: routers
+      listTitle: routers,
     });
     const police = reactive({
       policeName: "",
       policeNum: 0,
       open: false,
-      num: 0
+      num: 0,
     });
     const router = useRouter();
     const route = reactive(useRoute());
@@ -110,9 +109,9 @@ export default defineComponent({
       } else {
         return require("@/assets/bao.png");
       }
-      police.policeNum > 0 ?
-        require("@/assets/bao1.png") :
-        require("@/assets/bao.png");
+      police.policeNum > 0
+        ? require("@/assets/bao1.png")
+        : require("@/assets/bao.png");
     });
 
     watch(
@@ -184,9 +183,7 @@ export default defineComponent({
       }
     };
     // 页面重启
-    const {
-      getList
-    } = Rotations(history);
+    const { getList } = Rotations(history);
 
     return {
       ...toRefs(police),
@@ -198,9 +195,9 @@ export default defineComponent({
       src,
       clear,
       fistPlay,
-      clears
+      clears,
     };
-  }
+  },
 });
 </script>
 

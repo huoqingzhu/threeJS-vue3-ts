@@ -1,89 +1,98 @@
 <template>
-<div class="zhushi">
-  <p>注释: <span>当前为首页</span></p>
-  <div class="title">
-    一.计算属性传参数
+  <div class="zhushi">
+    <div class="tab">
+      <a-statistic
+        title="房间数"
+        :value="topData.room_num"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+      <a-statistic
+        title="在线人数"
+        :value="topData.user_num"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+      <a-statistic
+        title="充值人数"
+        :value="topData.recharge_money"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+      <a-statistic
+        title="服务费"
+        :value="topData.service_money"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+      <a-statistic
+        title="提现金额"
+        :value="topData.draw_money"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+      <a-statistic
+        title="提现人数"
+        :value="topData.draw_num"
+        :precision="0"
+        suffix="人"
+        :value-style="{ color: '#3f8600' }"
+        style="width: 100px"
+      >
+      </a-statistic>
+    </div>
+    <!--折线图-->
+    <div class="table">
+      <div class="time">
+        <a-month-picker
+          v-model:value="value2"
+          placeholder="Select month"
+          @change="onChange"
+        />
+      </div>
+      <br />
+      <chart ref="charts" :option="option" :style="style"></chart>
+    </div>
   </div>
-
-  <div>
-    (1). 2.x写法（现在一样能用） computed: { test() { return function (value:
-    any) { return `我是计算属性${value}`; }; } },
-  </div>
-  <div>
-    (2.) setup写法: const setColor=computed(()=>{ return (value:any)=>{ return
-    `${state.name}${value}` } })
-  </div>
-  <p>测试1setColor(1):{{ setColor(1) }}</p>
-  <p>测试2test(2):{{ test(2) }}</p>
-  <div class="title">
-    二.watch
-  </div>
-  <p>
-    先定义一个对象watchChange:{{ JSON.stringify(watchChange) }}
-    <a-button @click="fn">change</a-button>
-  </p>
-  <p>
-    2.x watch 监听watchChange: watchChange: { deep: true, immediate: false,
-    handler(a, b) { console.log("2.x watch 变化le"); } }
-  </p>
-  <p>
-    3.x warch watch(state.watchChange,() => { console.log("3.x变化了")
-    },{deep: true, immediate: false, })
-  </p>
-  <p>watchEffect(() => console.log(state.watchChange.age))</p>
-</div>
 </template>
 
 <script lang="ts">
-import {
-  compile,
-  defineComponent,
-  toRefs
-} from "vue";
-import {
-  mapHosk
-} from "./hosk";
+import { compile, defineComponent, toRefs } from "vue";
+import { topHosk, echarts } from "./hosk";
+import chart from "@/components/echart/ecahrt.vue";
 
 export default defineComponent({
-  computed: {
-    test() {
-      return (value: any) => {
-        return `计算属性${value}`;
-      };
-    }
-  },
-  data() {
-    return {
-      obj: {
-        name: "huo"
-      }
-    };
-  },
-  methods: {
-    fn() {
-      (this as any).watchChange.age = (this as any).watchChange.age + 1;
-      console.log((this as any).watchChange.age);
-    }
-  },
-  watch: {
-    watchChange: {
-      deep: true, //开启深度监听
-      immediate: false, //上来就观察计算
-      handler(a, b) {
-        console.log("2.x watch 变化le");
-      }
-    }
+  components: {
+    chart,
   },
   setup() {
-    const {
-      state,
-      setColor
-    } = mapHosk();
+    // 头部标签
+    const { state } = topHosk();
+    const { echartState, onChange } = echarts();
+    // return {
+
+    // };
     return {
       ...toRefs(state),
-      setColor
+      ...toRefs(echartState),
+      onChange,
     };
-  }
+  },
 });
 </script>
 

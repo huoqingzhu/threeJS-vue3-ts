@@ -4,6 +4,8 @@ export default createStore({
     listData:{1:10},
     // 蜂鸣器报警
     police:0,
+    // token
+    token:"",
     // 控制首页请求
     open:false,
     // 报警闪烁

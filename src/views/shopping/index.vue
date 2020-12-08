@@ -1,66 +1,63 @@
 <template>
-  <div>
-    {{ path }}
-    <a-table
-      :columns="columns"
-      :data-source="historyData"
-      :loading="loading"
-      :pagination="historyPagination"
-      :rowKey="(record) => record._id"
-      @change="historyChange"
-      bordered
-    ></a-table>
-  </div>
+<div>
+  <a-table :columns="columns" :data-source="historyData" :loading="loading" :pagination="historyPagination" :rowKey="record => record._id" @change="historyChange" bordered></a-table>
+</div>
 </template>
 
 <script lang="ts">
-import Vue, { defineComponent, reactive, toRefs, watch } from "vue";
-import { history } from "./hooks";
-
-import { login } from "@/api/user";
+import Vue, {
+  defineComponent,
+  reactive,
+  toRefs
+} from "vue";
+import {
+  history
+} from "./hosk";
 export default defineComponent({
-  created() {
-    console.log("调用了我");
-  },
-
   setup() {
-    const { state, getHistory, historyChange, formatDate } = history();
+    const {
+      state,
+      getHistory,
+      change,
+      historyChange,
+      formatDate
+    } = history();
     getHistory();
     return {
       columns,
+      change,
       getHistory,
       historyChange,
       formatDate,
-      ...toRefs(state),
+      ...toRefs(state)
     };
-  },
+  }
 });
-const columns = [
-  {
+const columns = [{
     title: "代码",
     key: "code",
     dataIndex: "code",
-    align: "center",
+    align: "center"
   },
   {
     title: "测点名称",
     key: "name",
     dataIndex: "name",
-    align: "center",
+    align: "center"
   },
   {
     title: "测量值",
     key: "value",
     dataIndex: "value",
-    align: "center",
+    align: "center"
   },
 
   {
     title: "时间",
     key: "time",
     dataIndex: "time",
-    align: "center",
-  },
+    align: "center"
+  }
 ];
 </script>
 

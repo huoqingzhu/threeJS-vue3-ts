@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import ant from "./utils/ant";
 import "@/style/ant.less";
+import 'default-passive-events'//消除url警告
 // 引入rem
 import "@/utils/rem"
 // 路由导航

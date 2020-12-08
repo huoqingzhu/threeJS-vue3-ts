@@ -21,6 +21,15 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "home",
     component: () => import("@/views/Home.vue"),
     children
+  },
+  {
+    path: "/login",
+    name: "登陆",
+    meta: {
+      title: "登陆",
+      keepAlive: true
+    },
+    component: () => import("@/views/Login/index.vue"),
   }
 ];
 
