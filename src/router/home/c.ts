@@ -7,7 +7,7 @@ export default [
       auth: true,
       title: "图表",
       iocn: "PropertySafetyOutlined",
-      keepAlive: true
+      keepAlive: false
     }
   }
 ];

@@ -8,6 +8,11 @@
 import Vue, { defineComponent, reactive, toRefs } from "vue";
 
 export default defineComponent({
-  setup() {},
+  setup() {
+    console.log("日志不缓存");
+  },
+  activated() {
+    console.log("日志缓存");
+  },
 });
 </script>

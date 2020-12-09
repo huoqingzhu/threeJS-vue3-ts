@@ -12,29 +12,23 @@ router.beforeEach(async (to, from, next) => {
   const hasToken = 1===1;
   if (hasToken) {
     if (to.path === "/login") {
-      // 已经登录，跳转到首页
-      next();
-    } else {
+        next(); // 已经登录，跳转到首页
+    }else{
       // 获取用户信息
-      const hasGetUserInfo =
-        store.getters.userData && store.getters.userData.name;
-      //   console.log(hasGetUserInfo);
+      const hasGetUserInfo =store.getters.userData && store.getters.userData.name;
       if (hasGetUserInfo) {
         next();
-      } else {
+      }else {
         try {
-          // get user info
-          // await store.dispatch('user/getInfo')
-          next();
-        } catch (error) {
-          // 清除用户信息，退出登录，跳转登录页
-          store.commit("user/LOGOUT");
-
+           next();
+          } catch (error) {
+             // 清除用户信息，退出登录，跳转登录页
+            store.commit("user/LOGOUT");
           next(`/login?redirect=${to.path}`);
+         }
         }
-      }
-    }
-  } else {
+     }
+   } else {
     /* has no token */
     if (whiteList.indexOf(to.path) !== -1) {
       // 白名单中，无需验证

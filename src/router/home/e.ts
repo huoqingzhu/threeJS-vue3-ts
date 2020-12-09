@@ -8,7 +8,7 @@ export default [
       auth: true,
       title: "公告",
       iocn: "AuditOutlined",
-      keepAlive: true
+      keepAlive: false
     }
   }
 ];

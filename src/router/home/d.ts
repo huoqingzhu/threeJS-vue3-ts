@@ -8,7 +8,7 @@ export default [
       auth: true,
       title: "游戏设置",
       iocn: "SettingOutlined",
-      keepAlive: true
+      keepAlive: false
     }
   }
 ];

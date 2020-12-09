@@ -10,7 +10,14 @@
         <Heades></Heades>
       </div>
       <div class="rightBox">
-        <RouterView />
+        <!-- 3.x -->
+        <router-view v-slot="{ Component }">
+          <transition>
+            <keep-alive :include="$store.state.keepLiveRoute">
+              <component :is="Component" />
+            </keep-alive>
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>

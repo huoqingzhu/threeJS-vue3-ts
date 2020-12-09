@@ -7,7 +7,7 @@ export default [
     meta: {
       auth: true,
       title: "首页",
-      keepAlive: true,
+      keepAlive: false,
       iocn: "AppstoreOutlined",
     },
  
