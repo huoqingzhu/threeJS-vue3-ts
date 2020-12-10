@@ -4,7 +4,7 @@ export default createStore({
     listData:{1:10},
     // 蜂鸣器报警
     police:0,
-    keepLiveRoute:["Notice"],
+    keepLiveRoute:["Notice","Main","Dome1","Dome2"],
     // token
     token:"",
     // 控制首页请求

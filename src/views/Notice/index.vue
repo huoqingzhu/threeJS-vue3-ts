@@ -17,5 +17,8 @@ export default defineComponent({
     //开启缓存后,跳转后此页面触发
     console.log("商城缓存");
   },
+  mounted() {
+    console.log("重新创建");
+  },
 });
 </script>

@@ -46,6 +46,8 @@ class Map {
     this.container!.appendChild(this.renderer.domElement); //body元素中插入canvas对象
     this.render()//执行渲染
     this.createControls()//监听窗口变化
+
+    
   }
   // 渲染函数
   render = () => {

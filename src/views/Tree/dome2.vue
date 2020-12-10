@@ -22,14 +22,14 @@ import * as THREE from "three";
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
 import { CustomGeometry } from "@/utils/tree/model";
+import { log } from "three";
 interface state {
   map: any;
 }
 export default defineComponent({
-  name: "dome2",
+  name: "Dome2",
   setup() {
     console.log("dome2");
-
     let face: THREE.Mesh | THREE.Points | THREE.Line;
     let Points: THREE.Mesh | THREE.Points | THREE.Line;
     let Line: THREE.Mesh | THREE.Points | THREE.Line;
@@ -74,6 +74,12 @@ export default defineComponent({
       ...toRefs(state),
       handleChange,
     };
+  },
+  beforeUnmount() {
+    let dome: any = document.getElementById("map2");
+    dome.removeChild(dome.children[0]);
+    // dome.children[0].style = "display: none; width: 0px; height: 0px;";
+    console.log(dome.children[0]);
   },
 });
 </script>

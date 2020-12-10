@@ -12,8 +12,10 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { defineComponent, toRefs } from "vue";
 export default defineComponent({
+  name: "Main",
   setup() {},
   mounted() {
+    console.log("重新创建");
     // 拿到容器
     let container = document.getElementById("map");
     /**
@@ -87,10 +89,9 @@ export default defineComponent({
   padding: 0.2rem 1rem;
   width: 100%;
   height: 100%;
-
 }
 #map {
- width:700px;
+  width: 700px;
   height: 700px;
 }
 </style>

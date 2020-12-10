@@ -8,29 +8,35 @@
 <script lang="ts">
 // 引入tree.js
 import * as THREE from "three";
-import Map from "@/utils/tree/map"
-import { defineComponent, toRefs ,reactive,onMounted} from "vue";
-import {createCube} from "@/utils/tree/model"
+import Map from "@/utils/tree/map";
+import { defineComponent, toRefs, reactive, onMounted } from "vue";
+import { createCube } from "@/utils/tree/model";
+import { log } from "three";
 interface state {
-  map:any
+  map: any;
 }
 export default defineComponent({
-  name:"dome1",
+  name: "Dome1",
   setup() {
-  // 初始化 Map
-  function init(){
-     let container = document.getElementById("maps");
-     let map = new Map(container);
-     let Mesh1=createCube(0xffb6c1)//创建一个模型
-     map.addMesh(Mesh1)//将模型加入场景
-     //初始化map  
-     map.init() 
-  }
-   onMounted(() => {
-      init()
-   })
+    // 初始化 Map
+    function init() {
+      let container = document.getElementById("maps");
+      let map = new Map(container);
+      let Mesh1 = createCube(0xffb6c1); //创建一个模型
+      map.addMesh(Mesh1); //将模型加入场景
+      //初始化map
+      map.init();
+    }
+    onMounted(() => {
+      console.log("重新创建");
+      init();
+    });
   },
- 
+  beforeUnmount() {
+    let dome: any = document.getElementById("maps");
+    dome.removeChild(dome.children[0]);
+    console.log(dome.children[0]);
+  },
 });
 </script>
 
@@ -40,10 +46,12 @@ export default defineComponent({
   padding: 0.2rem 1rem;
   width: 100%;
   height: 100%;
-
 }
-#maps{
- width:700px;
- height: 700px;
+#maps {
+  width: 700px;
+  height: 700px;
+  canvas {
+    display: none;
+  }
 }
 </style>
