@@ -28,7 +28,7 @@ const CustomGeometry=(type:string="material",Gradients:boolean=false,Normal:bool
     0, 0, 100, //顶点5坐标
     50, 0, 0, //顶点6坐标
   ]);
-  // 设置渐变色
+  // 设置顶点颜色
   var colors = new Float32Array([
       1, 0, 0, //顶点1颜色
       0, 1, 0, //顶点2颜色
@@ -37,6 +37,7 @@ const CustomGeometry=(type:string="material",Gradients:boolean=false,Normal:bool
       0, 1, 1, //顶点5颜色
       1, 0, 1, //顶点6颜色
   ]);
+  // 设置发向量
   var normals = new Float32Array([
     0, 0, 1, //顶点1法向量
     0, 0, 1, //顶点2法向量
@@ -58,13 +59,14 @@ const CustomGeometry=(type:string="material",Gradients:boolean=false,Normal:bool
   let attribue = new THREE.BufferAttribute(vertices, 3); //3个为一组，表示一个顶点的xyz坐标
   // 设置几何体attributes属性的位置属性 
   geometry.attributes.position = attribue;
-  // 三角面(网格)渲染模式
- 
+
+  //设置材质 
   let material = new THREE.MeshBasicMaterial({
     color: 0x0000ff, //三角面颜色
    //以顶点颜色为准
     side: THREE.DoubleSide //两面可见
   }); //材质对象
+  material.visible=true
   if(Gradients){
       material = new THREE.MeshBasicMaterial({
       vertexColors: Gradients,

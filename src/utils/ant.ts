@@ -10,7 +10,8 @@ import {
   Statistic,
   DatePicker,
   Dropdown,
-  Form
+  Form,
+  Select
 } from "ant-design-vue";
 // import Cards from "@/components/component/Card.vue"
 // import Police from "@/components/component/Police.vue"
@@ -32,6 +33,7 @@ const ant = {
     Vue.use(Menu)
     Vue.use(Form)
     Vue.use(Tabs);
+    Vue.use(Select)
   }
 };
 export default ant;
