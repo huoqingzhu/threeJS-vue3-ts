@@ -1,6 +1,16 @@
 <template>
   <div class="zhushi">
-    <h4>顶点概念、几何体结构</h4>
+    <h4>顶点概念、几何体结构(路径:views/Tree/dome2.vue</h4>
+    <ul>
+      <li>
+        1.立方体网格模型Mesh是由立方体几何体geometry和材质material两部分构成
+      </li>
+      <li>2.几何体BoxGeometry本质上就是一系列的顶点构成</li>
+      <li>3.立体几何的显示与引隐藏通过控制材质material的visible属性</li>
+      <li>
+        4.材质的颜色可以直接设置也可以设置以顶点颜色计算,以顶点颜色计算会进行差值计算（渐变）
+      </li>
+    </ul>
     <a-select
       v-model:value="value"
       style="width: 120px"
@@ -12,7 +22,6 @@
       <a-select-option value="face"> face </a-select-option>
     </a-select>
     <div id="map2"></div>
-    <!-- <div id="map3"></div> -->
   </div>
 </template>
 
@@ -23,13 +32,13 @@ import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
 import { CustomGeometry } from "@/utils/tree/model";
 import { log } from "three";
+
 interface state {
   map: any;
 }
 export default defineComponent({
   name: "Dome2",
   setup() {
-    console.log("dome2");
     let face: THREE.Mesh | THREE.Points | THREE.Line;
     let Points: THREE.Mesh | THREE.Points | THREE.Line;
     let Line: THREE.Mesh | THREE.Points | THREE.Line;
@@ -45,16 +54,19 @@ export default defineComponent({
       //初始化map
       map.init();
     }
+
     //真实dome加载后
     onMounted(() => {
       //自己设置颜色
       init("map2", true, true);
+
       //以顶点为为准
       // init("map3", true, true);
     });
     const state = reactive({
       value: "face",
     });
+    // 切换类型
     const handleChange = (e: any) => {
       if (e === "point") {
         (Points.material as THREE.PointsMaterial).visible = true;
@@ -76,10 +88,12 @@ export default defineComponent({
     };
   },
   beforeUnmount() {
-    let dome: any = document.getElementById("map2");
-    dome.removeChild(dome.children[0]);
-    // dome.children[0].style = "display: none; width: 0px; height: 0px;";
-    console.log(dome.children[0]);
+    try {
+      let dome: any = document.getElementById("map2");
+      dome.removeChild(dome.children[0]);
+    } catch {
+      console.log("销毁出错");
+    }
   },
 });
 </script>
@@ -92,10 +106,6 @@ export default defineComponent({
   height: 100%;
 }
 #map2 {
-  width: 400px;
-  height: 400px;
-}
-#map3 {
   width: 400px;
   height: 400px;
 }

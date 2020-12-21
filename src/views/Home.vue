@@ -76,12 +76,12 @@ export default defineComponent({
     z-index: 1;
     display: flex;
     .leftMeau {
-      width: 2.5rem;
+      width: 3rem;
       height: 100%;
       background-color: pink;
     }
     .rightBox {
-      width: 100%-2.5rem;
+      width: 100%-3rem;
       height: 100%;
     }
   }

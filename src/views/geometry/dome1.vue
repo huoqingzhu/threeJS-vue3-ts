@@ -1,7 +1,17 @@
 <template>
   <div class="zhushi">
-    <h4>我们来尝试封装一下tree.js</h4>
-    <div id="maps"></div>
+    <h4>我们来尝试封装一下tree.js(路径:views/Tree/dome1.vue)</h4>
+
+    <div style="display: flex">
+      <div>
+        <p>three.js是右手坐标系</p>
+        <img src="https://img-blog.csdnimg.cn/20181227215027204" alt="" />
+        <p>
+          图中右边那个手对应的坐标系，就是右手坐标系。在Threejs中，坐标和右边的坐标完全一样。x轴正方向向右，y轴正方向向上，z轴由屏幕从里向外。
+        </p>
+      </div>
+      <div id="maps"></div>
+    </div>
   </div>
 </template>
 
@@ -35,7 +45,6 @@ export default defineComponent({
   beforeUnmount() {
     let dome: any = document.getElementById("maps");
     dome.removeChild(dome.children[0]);
-    console.log(dome.children[0]);
   },
 });
 </script>

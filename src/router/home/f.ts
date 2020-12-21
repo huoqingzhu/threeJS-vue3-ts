@@ -1,14 +1,38 @@
 
 export default [
   {
-    path: "/journal",
-    name: "日志",
-    component: () => import("@/views/journal/index.vue"),
+    path: "/ceng",
+    name: "层级",
+    component: () => import("@/views/ceng/index.vue"),
+    children:[
+      {
+        path: "/ceng/group",
+        name: "Grop",
+        component: () => import("@/views/ceng/group.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "Grop",
+          keepAlive: true,
+        },
+      },
+      {
+        path: "/ceng/dome2",
+        name: "层级模型节点命名、查找、遍历",
+        component: () => import("@/views/ceng/dome2.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "Grop",
+          keepAlive: true,
+        },
+      },
+    ],
     meta: {
       auth: true,
-      title: "日志",
-      iocn: "ProfileOutlined",
-      keepAlive: true
+      title: "层级模型节点命名、查找、遍历",
+      iocn: "AuditOutlined",
+      keepAlive: false
     }
   }
 ];

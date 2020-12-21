@@ -11,7 +11,8 @@ import {
   DatePicker,
   Dropdown,
   Form,
-  Select
+  Select,
+  Switch
 } from "ant-design-vue";
 // import Cards from "@/components/component/Card.vue"
 // import Police from "@/components/component/Police.vue"
@@ -29,6 +30,7 @@ const ant = {
     Vue.component(Dropdown.name, Dropdown);
     Vue.component(Spin.name, Spin);
     Vue.component(Statistic.name, Statistic);
+    Vue.component(Switch.name,Switch);
     Vue.use(DatePicker)
     Vue.use(Menu)
     Vue.use(Form)
