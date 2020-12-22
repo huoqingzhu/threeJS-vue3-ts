@@ -139,7 +139,9 @@ export default defineComponent({
   },
   beforeUnmount() {
     let dome: any = document.getElementById("maps");
-    dome.removeChild(dome.children[0]);
+    if (dome.children[0]) {
+      dome.removeChild(dome.children[0]);
+    }
   },
 });
 </script>

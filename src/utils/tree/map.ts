@@ -17,7 +17,7 @@ class Map {
     let width = this.container!.clientWidth; //窗口宽度
     let height = this.container!.clientHeight; //窗口高度
     let k = (width / height); //窗口宽高比
-    let s = 200; //三维场景显示范围控制系数，系数越大，显示的范围越大
+    let s = 400; //三维场景显示范围控制系数，系数越大，显示的范围越大
     //创建相机对象 
     // 正向投影
     if(camera){

@@ -1,6 +1,10 @@
 <template>
   <div class="zhushi">
-    <h1>学习资料参考郭隆邦老师的博客</h1>
+    <h1>
+      <a href="http://www.webgl3d.cn/Three.js/" target="_blank"
+        >学习资料参考郭隆邦老师的博客</a
+      >
+    </h1>
 
     <h4>
       本页面引入了tree.js,并且做了一个简单的dome(页面路径:views/main/main.vue)

@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex">
     <img src="@/assets/logo.png" class="logoImg" alt="logo" />
-    <div class="center title">Tree-Vue-TS</div>
+    <div class="center title">Three-Vue3-TS</div>
   </div>
 </template>
 <style scoped>

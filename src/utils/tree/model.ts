@@ -1,4 +1,16 @@
 import * as THREE from "three";
+// 生成随机色
+function randomColor(): string {
+  let colorStr: any = Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .toUpperCase();
+  let str = "#" + "000000".substring(0, 6 - colorStr) + colorStr;
+  if (str.length < 7) {
+    return "#ffffff";
+  } else {
+    return str;
+  }
+}
 // 创建一个立方体
 const createCube=(color:number=0x0000ff):THREE.Mesh=>{
   let cube:THREE.Mesh
@@ -350,9 +362,12 @@ const Face3=():THREE.Mesh=>{
 const creatGrou=():THREE.Group=>{
     //创建两个网格模型mesh1、mesh2
     let geometry = new THREE.BoxGeometry(20, 20, 20);
-    let material = new THREE.MeshLambertMaterial({color: 0x0000ff});
+    let material = new THREE.MeshLambertMaterial({color: 0xFF1493});
     let group = new THREE.Group();
     let mesh1 = new THREE.Mesh(geometry, material);
+    mesh1.material.color.set(0xFF1493)
+    mesh1.position.set(50, 0, 0);
+
     let mesh2 = new THREE.Mesh(geometry, material);
     mesh2.translateX(25);
     //把mesh1型插入到组group中，mesh1作为group的子对象
@@ -401,7 +416,7 @@ personGroup.translateY(50)
 function sphereMesh(R: number | undefined, x: number, y: number, z: number) {
   let geometry = new THREE.SphereGeometry(R, 25, 25); //球体几何体
   let material = new THREE.MeshPhongMaterial({
-    color: 0x0000ff
+    color: 0xFFD700
   }); //材质对象Material
   let mesh = new THREE.Mesh(geometry, material); // 创建网格模型对象
   mesh.position.set(x, y, z);
@@ -411,7 +426,7 @@ function sphereMesh(R: number | undefined, x: number, y: number, z: number) {
 function cylinderMesh(R: number | undefined, h: number | undefined, x: number, y: number, z: number) {
   let geometry = new THREE.CylinderGeometry(R, R, h, 25, 25); //球体几何体
   let material = new THREE.MeshPhongMaterial({
-    color: 0x0000ff
+    color: 0xFFD700
   }); //材质对象Material
   let mesh = new THREE.Mesh(geometry, material); // 创建网格模型对象
   mesh.position.set(x, y, z);
@@ -420,5 +435,434 @@ function cylinderMesh(R: number | undefined, h: number | undefined, x: number, y
 return personGroup
 
 }
+/**
+ * 创建圆弧
+ */
+const createArcCurve=():THREE.Line=>{
+    let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+    //参数：0, 0圆弧坐标原点x，y  100：圆弧半径    0, 2 * Math.PI：圆弧起始角度
+    let arc = new THREE.ArcCurve(0, 0, 100, 0, 1* Math.PI,false);
+    //getPoints是基类Curve的方法，返回一个vector2对象作为元素组成的数组
+    let points = arc.getPoints(50);//分段数50，返回51个顶点
+    // setFromPoints方法从points中提取数据改变几何体的顶点属性vertices
+    geometry.setFromPoints(points); 
+    let material = new THREE.LineBasicMaterial({
+      color: 0x000000
+    });
+    //线条模型对象
+    let line = new THREE.Line(geometry, material);
+    return line
+}
+/**
+ * 创建直线
+ */
+const crateLine=():THREE.Line=>{
+    let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+    let p1 = new THREE.Vector3(50, 0, 0); //顶点1坐标
+    let p2 = new THREE.Vector3(50, 170, 0); //顶点2坐标
+    //顶点坐标添加到geometry对象
+    geometry.vertices.push(p1, p2);
+    let material = new THREE.LineBasicMaterial({
+      color: 0x00FF80,
+    });//材质对象
+    //线条模型对象
+    let line = new THREE.Line(geometry, material);
+    return line
+}
+/**
+ * 创建三维直线
+ */
+const crete3DLine=():THREE.Line=>{
+    let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+    let p1 = new THREE.Vector3(20, 0, 0); //顶点1坐标
+    let p2 = new THREE.Vector3(20, 170, 0); //顶点2坐标
+    // 三维直线LineCurve3
+    let LineCurve = new THREE.LineCurve3(p1, p2);
+    // 二维直线LineCurve
+    // let LineCurve = new THREE.LineCurve(new THREE.Vector2(50, 0), new THREE.Vector2(0, 70));
+    let pointArr = LineCurve.getPoints(10);
+    geometry.setFromPoints(pointArr);
+    let material = new THREE.LineBasicMaterial({
+      color: 0xFF0000,
+    });//材质对象
+    //线条模型对象
+    let line = new THREE.Line(geometry, material);
+    return line
+}
+/**
+ * 创建样条曲线
+ */
+const createCatmullRom=():THREE.Line=>{
+    let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+    // 三维样条曲线  Catmull-Rom算法
+    let curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-50, 20, 90),
+      new THREE.Vector3(-10, 40, 40),
+      new THREE.Vector3(0, 0, 0),
+      new THREE.Vector3(60, -60, 0),
+      new THREE.Vector3(70, 0, 80)
+    ]);
+    //getPoints是基类Curve的方法，返回一个vector3对象作为元素组成的数组
+    let points = curve.getPoints(100); //分段数100，返回101个顶点
+    // setFromPoints方法从points中提取数据改变几何体的顶点属性vertices
+    geometry.setFromPoints(points);
+    //材质对象
+    let material = new THREE.LineBasicMaterial({
+      color: 0x000000
+    });
+    //线条模型对象
+      return new THREE.Line(geometry, material);
+}
+/**
+ * 创建贝塞尔曲线
+ */
+const createQuadraticBezier=():THREE.Line=>{
+  let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+  let p1 = new THREE.Vector3(-80, 0, 0);
+  let p2 = new THREE.Vector3(-40, 100, 0);
+  let p3 = new THREE.Vector3(40, 100, 0);
+  let p4 = new THREE.Vector3(80, 0, 0);
+  // 三维三次贝赛尔曲线
+  let curve = new THREE.CubicBezierCurve3(p1, p2, p3, p4);
+  let points = curve.getPoints(100); //分段数100，返回101个顶点
+  // setFromPoints方法从points中提取数据改变几何体的顶点属性vertices
+  geometry.setFromPoints(points);
+  let material = new THREE.LineBasicMaterial({
+    color: 0x5F9EA0	
+  });
+  //线条模型对象
+    return new THREE.Line(geometry, material);
+}
+/**
+ * 创建组合曲线
+ */
+const createCurvePath=():THREE.Line=>{
+  let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
+  // 绘制一个U型轮廓
+  let R = 80;//圆弧半径
+  let arc = new THREE.ArcCurve(0, 0, R, 0, Math.PI, true);
+  // 半圆弧的一个端点作为直线的一个端点
+  let line1 = new THREE.LineCurve(new THREE.Vector2(R, 200), new THREE.Vector2(R, 0));
+  let line2 = new THREE.LineCurve(new THREE.Vector2(-R, 0), new THREE.Vector2(-R, 200));
+  // 创建组合曲线对象CurvePath
+  let CurvePath = new THREE.CurvePath();
+  // 把多个线条插入到CurvePath中
+  CurvePath.curves.push(line1, arc, line2);
+  //分段数200
+  let points:any = CurvePath.getPoints(200);
+  // setFromPoints方法从points中提取数据改变几何体的顶点属性vertices
+  geometry.setFromPoints(points);
+  //材质对象
+  let material = new THREE.LineBasicMaterial({
+    color: 0x000000
+  });
+  //线条模型对象
+  return new THREE.Line(geometry, material);
+}
+/**
+ * 样条曲线生产管道
+ */
+const createTubeGeometry=():THREE.Mesh=>{
+  //创建管道成型的路径(3D样条曲线)
+  let path = new THREE.CatmullRomCurve3([
+  new THREE.Vector3(-10, -50, -50),
+  new THREE.Vector3(10, 0, 0),
+  new THREE.Vector3(8, 50, 50),
+  new THREE.Vector3(-5, 0, 100)
+  ]);
+  // path:路径   40：沿着轨迹细分数  2：管道半径   25：管道截面圆细分数
+  let geometry = new THREE.TubeGeometry(path, 40, 2, 25);
+  let material = new THREE.MeshLambertMaterial({
+    color:0x00FF7F ,
+ }); 
+ return new THREE.Mesh(geometry, material); //网格模型对象Mesh
+}
+/**
+ * CurvePath多段路径生成管道
+ */
+const createCurvePathTubeGeometry=():THREE.Mesh=>{
+    //创建管道成型的路径(3D样条曲线)
+    let p1 = new THREE.Vector3(-85.35, -35.36)
+    let p2 = new THREE.Vector3(-50, 0, 0);
+    let p3 = new THREE.Vector3(0, 50, 0);
+    let p4 = new THREE.Vector3(50, 0, 0);
+    let p5 = new THREE.Vector3(85.35, -35.36);
+    // 创建线条一：直线
+    let line1 = new THREE.LineCurve3(p1,p2);
+    // 重建线条2：三维样条曲线
+    let curve = new THREE.CatmullRomCurve3([p2, p3, p4]);
+    // 创建线条3：直线
+    let line2 = new THREE.LineCurve3(p4,p5);
+    let CurvePath:any = new THREE.CurvePath();// 创建CurvePath对象
+    CurvePath.curves.push(line1, curve, line2);// 插入多段线条
+    //通过多段曲线路径创建生成管道
+    //通过多段曲线路径创建生成管道，CCurvePath：管道路径
+    let geometry = new THREE.TubeGeometry(CurvePath, 100, 5, 25, false);
+      let material = new THREE.MeshLambertMaterial({
+        color:0xFFB6C1 ,
+     }); 
+     return new THREE.Mesh(geometry, material); //网格模型对象Mesh
+}
+/**
+ * 旋转造型
+ */
+const createLatheGeometry=():THREE.Mesh=>{
+  let shape = new THREE.Shape();//创建Shape对象
+    let points = [
+        new THREE.Vector2(50,60),
+        new THREE.Vector2(25,0),
+        new THREE.Vector2(50,-60)
+    ];
+    shape.splineThru(points);//顶点带入样条插值计算函数
+    let splinePoints = shape.getPoints(20);//插值计算细分数20
+    //let geometry = new THREE.LatheGeometry(points,30);
+    let geometry= new THREE.LatheGeometry(splinePoints,30);//旋转造型
+    let material=new THREE.MeshLambertMaterial({
+        color:0x0000ff,//三角面颜色
+        side:THREE.DoubleSide//两面可见
+    });//材质对象
+    material.wireframe = true;//线条模式渲染(查看细分数)
+    return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+ * 填充顶点构成的轮廓 5边形
+ */
+const ShapeGeometry=():THREE.Mesh=>{
+  let points = [
+    new THREE.Vector2(-50, -50),
+    new THREE.Vector2(-60, 0),
+    new THREE.Vector2(0, 50),
+    new THREE.Vector2(60, 0),
+    new THREE.Vector2(50, -50),
+    new THREE.Vector2(-50, -50),
+  ]
+  // 通过顶点定义轮廓
+  let shape = new THREE.Shape(points);
+  // shape可以理解为一个需要填充轮廓
+  // 所谓填充：ShapeGeometry算法利用顶点计算出三角面face3数据填充轮廓
+  let geometry = new THREE.ShapeGeometry(shape, 25);
+  let material=new THREE.MeshLambertMaterial({
+      color:0x0000ff,//三角面颜色
+      side:THREE.DoubleSide//两面可见
+  });//材质对象
+  // material.wireframe = true;//线条模式渲染(查看细分数)
+  return new THREE.Mesh(geometry,material);//旋转网格模型对象
 
-export {createCube,CustomGeometry,noIndex,index,VectorLine,Face3,creatGrou,creatPersonModel}
+}
+/**
+ * 填充绘制圆形.absarc()
+ */
+const absarcShapeGeometry=():THREE.Mesh=>{
+  let shape = new THREE.Shape();
+  shape.absarc(0,0,100,0,2*Math.PI,false);//圆弧轮廓
+  let geometry = new THREE.ShapeGeometry(shape, 25);
+  let material=new THREE.MeshLambertMaterial({
+      color:0xcccccc,//三角面颜色
+      side:THREE.DoubleSide//两面可见
+  });//材质对象
+  // material.wireframe = true;//线条模式渲染(查看细分数)
+  return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+ * 绘制矩形shap
+ */
+const rectangleShape=():THREE.Mesh=>{
+   // 通过shpae基类path的方法绘制轮廓（本质也是生成顶点）
+   let shape = new THREE.Shape();
+   // 四条直线绘制一个矩形轮廓
+   shape.moveTo(0,0);//起点
+   shape.lineTo(0,100);//第2点
+   shape.lineTo(100,100);//第3点
+   shape.lineTo(100,0);//第4点
+   shape.lineTo(0,0);//第5点
+    let geometry = new THREE.ShapeGeometry(shape, 25);
+     let material=new THREE.MeshLambertMaterial({
+         color:0x0000ff,//三角面颜色
+         side:THREE.DoubleSide//两面可见
+     });//材质对象
+     // material.wireframe = true;//线条模式渲染(查看细分数)
+     return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+ * 绘制内轮廓 打洞 外轮廓圆弧嵌套三个内圆弧轮廓 arc
+ */
+const arcShape=():THREE.Mesh=>{
+    // 一个外轮廓圆弧嵌套三个内圆弧轮廓
+    let shape = new THREE.Shape(); //Shape对象
+    //外轮廓
+    shape.arc(0, 0, 100, 0, 2 * Math.PI,false);
+    // 内轮廓1
+    let path1 = new THREE.Path();
+    path1.arc(0, 0, 40, 0, 2 * Math.PI,false);
+    // 内轮廓2
+    let path2 = new THREE.Path();
+    path2.arc(80, 0, 10, 0, 2 * Math.PI,false);
+    // 内轮廓3
+    let path3 = new THREE.Path();
+    path3.arc(-80, 0, 10, 0, 2 * Math.PI,false);
+    //三个内轮廓分别插入到holes属性中
+    shape.holes.push(path1, path2, path3);
+    let geometry = new THREE.ShapeGeometry(shape, 25);
+    let material=new THREE.MeshLambertMaterial({
+             color:0x0000ff,//三角面颜色
+             side:THREE.DoubleSide//两面可见
+      });//材质对象
+    // material.wireframe = true;//线条模式渲染(查看细分数)
+    return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+ * 多轮廓同时填充
+ */
+const manyShape=():THREE.Mesh=>{
+     let shape=new THREE.Shape();
+     shape.arc(-50,0,30,0,2*Math.PI,false);
+     // 轮廓对象2
+     let shape2=new THREE.Shape();
+     shape2.arc(50,0,30,0,2*Math.PI,false);
+     // 轮廓对象3
+     let shape3=new THREE.Shape();
+     shape3.arc(0,50,30,0,2*Math.PI,false);
+     // 多个shape作为元素组成数组,每一个shpae可以理解为一个要填充的轮廓
+     let geometry = new THREE.ShapeGeometry([shape,shape2,shape3], 30);
+     let material=new THREE.MeshLambertMaterial({
+      color:0x00FF7F,//三角面颜色
+      side:THREE.DoubleSide//两面可见
+     });//材质对象
+     // material.wireframe = true;//线条模式渲染(查看细分数)
+     return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+ * 创建拉伸网格模型
+ */
+const createExtrude=()=>{
+       let shape = new THREE.Shape();
+       /**四条直线绘制一个矩形轮廓*/
+       shape.moveTo(0,0);//起点
+       shape.lineTo(0,100);//第2点
+       shape.lineTo(100,100);//第3点
+       shape.lineTo(100,0);//第4点
+       shape.lineTo(0,0);//第5点
+       let geometry = new THREE.ExtrudeGeometry(//拉伸造型
+           shape,//二维轮廓
+           //拉伸参数
+           {
+              depth:120,//拉伸长度
+              bevelEnabled:false//无倒角
+          }
+      );
+      let material=new THREE.MeshLambertMaterial({
+        color:0xFF4500,//三角面颜色
+        side:THREE.DoubleSide//两面可见
+       });//材质对象
+       // material.wireframe = true;//线条模式渲染(查看细分数)
+       return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+/**
+* 创建扫描网格模型
+*/
+const createScanning=():THREE.Mesh=>{
+     let shape = new THREE.Shape();
+     /**四条直线绘制一个矩形轮廓*/
+     shape.moveTo(0,0);//起点
+     shape.lineTo(0,10);//第2点
+     shape.lineTo(10,10);//第3点
+     shape.lineTo(10,0);//第4点
+     shape.lineTo(0,0);//第5点
+     /**创建轮廓的扫描轨迹(3D样条曲线)*/
+     let curve = new THREE.CatmullRomCurve3([
+        new THREE.Vector3( -10, -50, -50 ),
+        new THREE.Vector3( 10, 0, 0 ),
+        new THREE.Vector3( 8, 50, 50 ),
+        new THREE.Vector3( -5, 0, 100)
+     ]);
+     let geometry = new THREE.ExtrudeGeometry(//拉伸造型
+        shape,//二维轮廓
+        //拉伸参数
+        {
+            bevelEnabled:false,//无倒角
+            extrudePath:curve,//选择扫描轨迹
+            steps:50//扫描方向细分数
+        }
+     );
+     let material=new THREE.MeshLambertMaterial({
+       color:0xFF4500,//三角面颜色
+       side:THREE.DoubleSide//两面可见
+      });//材质对象
+      // material.wireframe = true;//线条模式渲染(查看细分数)
+      return new THREE.Mesh(geometry,material);//旋转网格模型对象
+}
+  /**
+   * 
+   * @param {JSON} json 地图的JSON
+   * @returns {Object}模型的数据
+   */
+ const  createGeojson=(json:any,height:number):THREE.Group=> {
+   const group=new THREE.Group()
+
+  json.features.forEach((element:any) => {
+    let shapeArayy:THREE.Shape[]=[]
+    const color=randomColor()
+    element.geometry.coordinates.forEach((item:any)=> {
+      item.forEach((value: any) => {
+        let arr =value
+        let points:any[]=[];
+        // 转化为Vector2构成的顶点数组
+        arr.forEach((elem:any)=> {
+          points.push(new THREE.Vector2(elem[0],elem[1]))
+        });
+        // 样条曲线生成更多的点
+        // let SplineCurve = new THREE.SplineCurve(points)
+        // let shape = new THREE.Shape(SplineCurve.getPoints(100));//生成指定长度的点
+        let shape = new THREE.Shape(points);
+        shapeArayy.push(shape)
+      });
+     });
+    let geometry = new THREE.ExtrudeGeometry(//拉伸造型
+      shapeArayy,//二维轮廓
+      //拉伸参数
+      {
+         depth:height,//拉伸长度
+         bevelEnabled:false//无倒角
+     }
+    );
+    // geometry.center();//几何体居中
+    geometry.scale(5,5,2);//几何体缩放
+    let material = new THREE.MeshPhongMaterial({
+      color: color,
+      side: THREE.DoubleSide //两面可见
+    }); //材质对象
+    const node= new THREE.Mesh(geometry, material)
+    node.name=element.properties.name
+    group.add(node)
+    });
+    return group
+   
+}  
+
+export {
+  createCube,
+  CustomGeometry,
+  noIndex,
+  index,
+  VectorLine,
+  Face3,
+  creatGrou,
+  creatPersonModel,
+  createArcCurve,
+  crateLine,
+  crete3DLine,
+  createCatmullRom,
+  createQuadraticBezier,
+  createCurvePath,
+  createTubeGeometry,
+  createCurvePathTubeGeometry,
+  createLatheGeometry,
+  ShapeGeometry,
+  absarcShapeGeometry,
+  rectangleShape,
+  arcShape,
+  manyShape,
+  createExtrude,
+  createScanning,
+  createGeojson
+}

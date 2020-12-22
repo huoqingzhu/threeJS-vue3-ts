@@ -1,16 +1,13 @@
 <template>
   <div class="zhushi">
-    <h2>光源的类型</h2>
-    <h4>
-      在现实中没有光的世界黑暗的,在webgl中也是如此,下图生成了<span
-        style="color: #0000ff"
-        >材质为蓝色的正方体</span
-      >, 此时没有任何光源
-    </h4>
-    <p style="display: flex">
-      <span>请选择光源颜色:</span>
-      <input type="color" v-model="colors" />
-    </p>
+    <h3>层级模型节点命名、查找、遍历</h3>
+    <ul>
+      <li>模型命名(.name属性)</li>
+      <li>树结构层级模型</li>
+      <li>递归遍历方法.traverse()</li>
+      <li>查找某个具体的模型.getObjectById()、.getObjectByName()</li>
+    </ul>
+    <p>设置光源</p>
     <a-switch
       checked-children="环境光"
       un-checked-children="环境光"
@@ -31,30 +28,28 @@
       un-checked-children="聚光源"
       v-model:checked="spot"
     />
-    <span>除了环境光其他位置都是设置200</span>
+    <input type="color" v-model="colors" />
+    <p>设置躯体颜色</p>
+    <input type="color" v-model="colorMesh" />
+    <p>设置眼睛颜色</p>
+    <input type="color" v-model="eyeColor" />
     <div id="maps"></div>
   </div>
 </template>
-
 <script lang="ts">
-// 引入tree.js
-import * as THREE from "three";
+import Vue, { defineComponent, onMounted, reactive, toRefs, watch } from "vue";
 import Map from "@/utils/tree/map";
-import { defineComponent, toRefs, reactive, onMounted, watch } from "vue";
-import { createCube } from "@/utils/tree/model";
+import { creatPersonModel } from "@/utils/tree/model";
+import * as THREE from "three";
 
-interface state {
-  map: any;
-}
 export default defineComponent({
-  name: "Dome1",
   setup() {
     // 初始化 Map
     let map: Map;
     let ambient: THREE.AmbientLight; //环境光
     let point: THREE.PointLight; //点光源
     let directional: THREE.DirectionalLight; //平行光
-    let Mesh1: THREE.Mesh;
+    let Mesh1: THREE.Group;
     let spot: THREE.SpotLight;
     let state = reactive({
       colors: "#ffffff",
@@ -62,11 +57,13 @@ export default defineComponent({
       point: false,
       directional: false,
       spot: false,
+      colorMesh: "#FFD700",
+      eyeColor: "#000000",
     });
     function init() {
       let container = document.getElementById("maps");
       map = new Map(container, true, false);
-      Mesh1 = createCube(0x4169e1); //创建一个模型
+      Mesh1 = creatPersonModel(); //创建一个模型
       map.addMesh(Mesh1); //将模型加入场景
       map.init();
     }
@@ -137,12 +134,34 @@ export default defineComponent({
         }
       }
     );
+    // 观察躯体颜色变化
+    watch(
+      () => state.colorMesh,
+      (a, b) => {
+        map.scene.traverse((obj: any) => {
+          if (obj.type === "Mesh") {
+            obj.material.color.set(a);
+          }
+        });
+      }
+    );
+    watch(
+      () => state.eyeColor,
+      (a, b) => {
+        const node = map.scene.getObjectByName("左眼");
+        const node2 = map.scene.getObjectByName("右眼");
+        (node as any).material.color.set(a);
+        (node2 as any).material.color.set(a);
+      }
+    );
     onMounted(() => {
       console.log("重新创建");
       init();
+      // 初始化光源对象
       initialLight();
     });
-    function addLint() {}
+
+    // 初始化光源对象
     function initialLight() {
       //环境光
       ambient = new THREE.AmbientLight(state.colors);
@@ -179,20 +198,18 @@ export default defineComponent({
       // var spotLightHelper = new THREE.SpotLightHelper(spotLight);
       // map.scene.add(spotLightHelper);
     }
-    function changeColor(value: number) {
-      console.log(value);
-    }
     return {
       ...toRefs(state),
-      addLint,
-      changeColor,
     };
   },
-
   beforeUnmount() {
-    let dome: any = document.getElementById("maps");
-    if (dome.children[0]) {
-      dome.removeChild(dome.children[0]);
+    try {
+      let dome: any = document.getElementById("maps");
+      if (dome.children[0]) {
+        dome.removeChild(dome.children[0]);
+      }
+    } catch {
+      console.log("错误");
     }
   },
 });
@@ -208,29 +225,5 @@ export default defineComponent({
 #maps {
   width: 700px;
   height: 700px;
-  canvas {
-    display: none;
-  }
-}
-.col {
-  width: 80px;
-  height: 40px;
-  display: block;
-  background-color: #00ff00;
-  margin: 0 30px;
-}
-.col2 {
-  width: 80px;
-  height: 40px;
-  display: block;
-  background-color: #ff4500;
-  margin: 0 30px;
-}
-.col3 {
-  width: 80px;
-  height: 40px;
-  display: block;
-  background-color: #fff;
-  margin: 0 30px;
 }
 </style>

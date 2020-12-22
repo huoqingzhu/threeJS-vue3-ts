@@ -5,6 +5,7 @@
       <Logo class="logo" />
       <User class="" />
     </div>
+    <div class="hua"></div>
     <div class="home">
       <div class="leftMeau">
         <Heades></Heades>
@@ -54,7 +55,8 @@ export default defineComponent({
     width: 100%;
     height: 0.6rem;
     background-color: #fff;
-    box-shadow: 0px 3px 3px rgb(239, 243, 242);
+    // box-shadow: 0px 3px 3px #ccc;
+
     z-index: 10;
     display: flex;
     justify-content: space-between;
@@ -68,7 +70,18 @@ export default defineComponent({
       height: 100%;
     }
   }
-
+  .hua {
+    width: 100%;
+    position: fixed;
+    top: 0.6rem;
+    height: 2px;
+    background-color: red; /* 不支持线性的时候显示 */
+    background-image: linear-gradient(
+      to right,
+      rgb(171, 236, 21),
+      rgb(9, 187, 231)
+    );
+  }
   .home {
     width: 100%;
     margin-top: 0.6rem;
@@ -76,12 +89,12 @@ export default defineComponent({
     z-index: 1;
     display: flex;
     .leftMeau {
-      width: 3rem;
+      width: 4rem;
       height: 100%;
       background-color: pink;
     }
     .rightBox {
-      width: 100%-3rem;
+      width: 100%-4rem;
       height: 100%;
     }
   }

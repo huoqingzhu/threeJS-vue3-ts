@@ -6,7 +6,7 @@
     <ul>
       <p>下面场景就是两个Mesh组成一个Group添加到场景里面</p>
     </ul>
-    <div id="maps"></div>
+    <div id="map4"></div>
   </div>
 </template>
 <script lang="ts">
@@ -17,7 +17,7 @@ import { creatGrou } from "@/utils/tree/model";
 export default defineComponent({
   setup() {
     function init() {
-      let container = document.getElementById("maps");
+      let container = document.getElementById("map4");
       let map = new Map(container);
       let group = creatGrou(); //生成三角面
 
@@ -33,8 +33,10 @@ export default defineComponent({
     });
   },
   beforeUnmount() {
-    let dome: any = document.getElementById("maps");
-    dome.removeChild(dome.children[0]);
+    let dome: any = document.getElementById("map4");
+    if (dome.children[0]) {
+      dome.removeChild(dome.children[0]);
+    }
   },
 });
 </script>
@@ -46,7 +48,7 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 }
-#maps {
+#map4 {
   width: 700px;
   height: 700px;
 }

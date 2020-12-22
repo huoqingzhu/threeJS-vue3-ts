@@ -27,7 +27,7 @@
       </li>
     </ul>
 
-    <div id="map"></div>
+    <div id="map2"></div>
   </div>
 </template>
 
@@ -45,7 +45,7 @@ export default defineComponent({
     let geometry = createCube();
     let geometryScale = 1;
     function face3() {
-      let container = document.getElementById("map");
+      let container = document.getElementById("map2");
       let map = new Map(container);
       map.addMesh(geometry);
       map.init();
@@ -120,7 +120,7 @@ export default defineComponent({
   height: 100%;
 }
 
-#map {
+#map2 {
   width: 1000px;
   height: 600px;
 }
