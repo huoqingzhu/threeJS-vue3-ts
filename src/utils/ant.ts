@@ -5,12 +5,6 @@ import {
   Tabs,
   Spin,
   Card,
-  Popover,
-  Table,
-  Statistic,
-  DatePicker,
-  Dropdown,
-  Form,
   Select,
   Switch
 } from "ant-design-vue";
@@ -25,15 +19,9 @@ const ant = {
     Vue.component(Button.name, Button);
     Vue.component(Input.name, Input);
     Vue.component(Card.name, Card);
-    Vue.component(Popover.name, Popover);
-    Vue.component(Table.name, Table);
-    Vue.component(Dropdown.name, Dropdown);
     Vue.component(Spin.name, Spin);
-    Vue.component(Statistic.name, Statistic);
     Vue.component(Switch.name,Switch);
-    Vue.use(DatePicker)
     Vue.use(Menu)
-    Vue.use(Form)
     Vue.use(Tabs);
     Vue.use(Select)
   }

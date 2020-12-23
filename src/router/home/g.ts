@@ -70,8 +70,6 @@ export default [
           keepAlive: true,
         },
       },
-      
-      
     ],
     meta: {
       auth: true,

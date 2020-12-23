@@ -1,6 +1,13 @@
 <template>
   <div class="zhushi">
-    <h2></h2>
+    <h3>绘制地图的数据采用的是Geojson</h3>
+    <p>
+      数据来源<a
+        href="http://datav.aliyun.com/tools/atlas/#&lat=29.886420040401024&lng=106.720060693723&zoom=4.5"
+        target="_blank"
+        >高德</a
+      >
+    </p>
     <div id="map"></div>
   </div>
 </template>
@@ -9,7 +16,7 @@
 import Map from "@/utils/tree/map";
 import * as THREE from "three";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
-import { createGeojson } from "@/utils/tree/model";
+import { createGeojson, createCube } from "@/utils/tree/model";
 
 interface state {
   map: any;
@@ -19,9 +26,10 @@ export default defineComponent({
     const data = require("./JSON/zhong.json");
     let geometry = createGeojson(data, 5);
     let geometryScale = 2;
+    let map: Map;
     function face3() {
       let container = document.getElementById("map");
-      let map = new Map(container);
+      map = new Map(container, false);
       let ambient = new THREE.AmbientLight(0xffffff);
       map.scene.add(ambient); //环境光对象添加到scene场景中
       map.addMesh(geometry);
@@ -33,6 +41,8 @@ export default defineComponent({
     onMounted(() => {
       face3();
     });
+
+    return {};
   },
   beforeUnmount() {
     try {

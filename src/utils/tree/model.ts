@@ -794,7 +794,7 @@ const createScanning=():THREE.Mesh=>{
   /**
    * 
    * @param {JSON} json 地图的JSON
-   * @returns {Object}模型的数据
+   * @returns {THREE.Group}模型的数据
    */
  const  createGeojson=(json:any,height:number):THREE.Group=> {
    const group=new THREE.Group()
@@ -836,9 +836,202 @@ const createScanning=():THREE.Mesh=>{
     group.add(node)
     });
     return group
-   
 }  
+/**
+ * 添加纹理贴图
+ */
+const createTexture=():THREE.Mesh=>{
+    // 纹理贴图映射到一个矩形平面上
 
+    let geometry = new THREE.BoxGeometry(400, 400, 400); //立方体
+    let texture = new THREE.TextureLoader().load(
+      "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1435880887,2953173287&fm=26&gp=0.jpg"
+    );
+
+    // 立即使用纹理进行材质创建
+    let material = new THREE.MeshBasicMaterial({
+      map: texture,
+    });
+    let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+    return mesh
+}
+/**
+ * 添加数组材质
+ */
+const createMaterialArr=():THREE.Mesh=>{
+  let geometry = new THREE.BoxGeometry(100, 100, 100); //立方体
+  // let geometry = new THREE.PlaneGeometry(204, 102, 4, 4); //矩形平面
+  // let geometry = new THREE.SphereGeometry(60, 25, 25); //球体
+  // let geometry = new THREE.CylinderGeometry(60, 60, 25,25); //圆柱
+  //
+  // 材质对象1
+  let material_1 = new THREE.MeshPhongMaterial({
+    color: 0xffff3f
+  })
+  let texture = new THREE.TextureLoader().load(
+    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1435880887,2953173287&fm=26&gp=0.jpg"
+  );
+  // 材质对象2
+  let material_2 = new THREE.MeshLambertMaterial({
+    map: texture, // 设置纹理贴图
+    // wireframe:true,
+  });
+  // 设置材质数组  数据顺序:右 左 上 下  前后
+  let materialArr = [material_2, material_2, material_2, material_2, material_1, material_1];
+  
+  // 设置数组材质对象作为网格模型材质参数
+  let mesh = new THREE.Mesh(geometry, materialArr); //网格模型对象Mesh
+  return mesh
+}
+/**
+ * 
+ * @param wrapS 阵列（重复）
+ * @param offset 偏移0-1
+ * @param rotation 纹理旋转
+ */
+const createWrapTexture=(wrapS:boolean=false,offset?:{x:number,y:number},rotation?:number):THREE.Mesh=>{
+  // 纹理贴图映射到一个矩形平面上
+  let geometry = new THREE.BoxGeometry(100, 100, 100); //立方体
+  let texture = new THREE.TextureLoader().load("grass.png");
+   if(wrapS){
+       // 纹理阵列
+       texture.wrapS = THREE.RepeatWrapping;
+       texture.wrapT = THREE.RepeatWrapping;
+       // uv两个方向纹理重复数量
+       texture.repeat.set(4, 2);
+   }
+  // 纹理偏移
+   if(offset){
+      texture.offset = new THREE.Vector2(offset.x, offset.y)
+   }
+    // 纹理旋转
+   if(rotation){  
+      texture.rotation = Math.PI/rotation;
+      // 设置纹理的旋转中心，默认(0,0)
+      texture.center.set(0.5,0.5);
+   }
+  // 立即使用纹理进行材质创建
+  let material = new THREE.MeshBasicMaterial({
+    map: texture,
+  });
+  return new THREE.Mesh(geometry, material); //网格模型对象Mesh
+}
+/**
+ * 草地阵列重复排列
+ */
+const createGrass=():THREE.Mesh=>{
+  let geometry = new THREE.PlaneGeometry(1000, 1000); //矩形平面
+  // 加载树纹理贴图
+  let texture = new THREE.TextureLoader().load("grass.png");
+  // 设置阵列
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  // uv两个方向纹理重复数量
+  texture.repeat.set(10, 10);
+  let material = new THREE.MeshLambertMaterial({
+    map: texture,
+    side:THREE.DoubleSide//两面可见
+  });
+  let mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
+
+  mesh.rotateX(-Math.PI / 2);
+  return mesh
+}
+/**
+ * 创建一个纹理动画
+ */
+const createRepeatOffset=()=>{
+  let curve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-80, -40, 0),
+    new THREE.Vector3(-70, 40, 0),
+    new THREE.Vector3(70, 40, 0),
+    new THREE.Vector3(80, -40, 0)
+  ]);
+  let tubeGeometry = new THREE.TubeGeometry(curve, 100, 2, 50, false);
+  let textureLoader = new THREE.TextureLoader();
+  let texture = textureLoader.load( "run.png");
+  // 设置阵列模式为 RepeatWrapping
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT=THREE.RepeatWrapping
+  // 设置x方向的偏移(沿着管道路径方向)，y方向默认1
+  //等价texture.repeat= new THREE.Vector2(20,1)
+  texture.repeat.x = 20;
+  let tubeMaterial = new THREE.MeshPhongMaterial({
+    map: texture,
+    transparent: true,
+  });
+  let mesh = new THREE.Mesh(tubeGeometry, tubeMaterial); //网格模型对象Mesh
+  return {mesh,texture}
+}
+/**
+ * 创建canvs贴图
+ */
+const createCanvas=():THREE.Mesh=>{
+     let canvas = document.createElement("canvas");
+     canvas.width = 512;
+     canvas.height = 128;
+     let c:any = canvas.getContext('2d');
+     // 矩形区域填充背景
+     c.fillStyle = "#ff00ff";
+     c.fillRect(0, 0, 512, 128);
+       c.beginPath();
+     // 文字
+     c.beginPath();
+     c.translate(256,64);
+     c.fillStyle = "#000000"; //文本填充颜色
+     c.font = "bold 48px 宋体"; //字体样式设置
+     c.textBaseline = "middle"; //文本与fillText定义的纵坐标
+     c.textAlign = "center"; //文本居中(以fillText定义的横坐标)
+     c.fillText("THREE-VUE3-TS", 0, 0);
+       // canvas画布对象作为CanvasTexture的参数重建一个纹理对象
+     // canvas画布可以理解为一张图片
+     let texture = new THREE.CanvasTexture(canvas);
+     //打印纹理对象的image属性
+     // console.log(texture.image);
+     //矩形平面
+     let geometry = new THREE.PlaneGeometry(128, 32);
+     
+     let material = new THREE.MeshPhongMaterial({
+       map: texture, // 设置纹理贴图
+       side:THREE.DoubleSide//两面可见
+     });
+     // 创建一个矩形平面网模型，Canvas画布作为矩形网格模型的纹理贴图
+      return new THREE.Mesh(geometry, material);
+}
+/**
+ * 创建视频贴图
+ */
+const createVideo=()=>{
+   let video:any = document.createElement('video')
+   video.src = "./test.mp4"; // 设置视频地址
+   video.autoplay = "autoplay"; //要设置播放
+   // video对象作为VideoTexture参数创建纹理对象
+   let texture = new THREE.VideoTexture(video)
+   let geometry = new THREE.PlaneGeometry(300, 71); //矩形平面
+   let material = new THREE.MeshPhongMaterial({
+    map: texture, // 设置纹理贴图
+   }); 
+  return new THREE.Mesh(geometry, material); //网格模型对象Mesh
+}
+
+/**
+ * 法线贴纸
+ */
+const createNormalMap=()=>{
+  let geometry = new THREE.BoxGeometry(100, 100, 100); //创建一个立方体几何对象Geometry
+
+  // TextureLoader创建一个纹理加载器对象，可以加载图片作为几何体纹理
+var textureLoader = new THREE.TextureLoader();
+// 加载法线贴图
+var textureNormal = textureLoader.load('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgss0.baidu.com%2F7Po3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Fcc11728b4710b912bf5b8a23cbfdfc0393452250.jpg&refer=http%3A%2F%2Fgss0.baidu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1611327996&t=ea30c499821fade29cf4736b1e42fa23');
+var material = new THREE.MeshPhongMaterial({
+  color: 0xd4acf9,
+  normalMap: textureNormal, //法线贴图
+  //设置深浅程度，默认值(1,1)。
+  normalScale: new THREE.Vector2(3, 3),
+}); //材质对象Material
+return new THREE.Mesh(geometry, material); //网格模型对象Mesh
+}
 export {
   createCube,
   CustomGeometry,
@@ -864,5 +1057,13 @@ export {
   manyShape,
   createExtrude,
   createScanning,
-  createGeojson
+  createGeojson,
+  createTexture,
+  createMaterialArr,
+  createWrapTexture,
+  createGrass,
+  createRepeatOffset,
+  createCanvas,
+  createVideo,
+  createNormalMap
 }
