@@ -7,23 +7,50 @@ import {getData} from "@/api/article"
 const time=()=>{
 const timeState = reactive({date:"",time:"",timeInterval:1})
 const updateTime=()=> {
- 
   timeState.timeInterval = setInterval(() => {
-    const data = new Date();
-    const Y = data.getFullYear() + "年";
-    const M =
-      (data.getMonth() + 1 < 10 ?
-        "0" + (data.getMonth() + 1) :
-        data.getMonth() + 1) + "月";
+    // const data = new Date();
+    // const Y = data.getFullYear() + "年";
+    // const M =
+    //   (data.getMonth() + 1 < 10 ?
+    //     "0" + (data.getMonth() + 1) :
+    //     data.getMonth() + 1) + "月";
 
-    const D = data.getDate() + "日";
-    timeState.date = Y + M + D;
-    timeState.time =
-      data.getHours().toString().padStart(2, "0") +
-      ":" +
-      data.getMinutes().toString().padStart(2, "0") +
-      ":" +
-      data.getSeconds().toString().padStart(2, "0"); // 修改数据date
+    // const D = data.getDate() + "日";
+    // timeState.date = Y + M + D;
+    // timeState.time =
+    //   data.getHours().toString().padStart(2, "0") +
+    //   ":" +
+    //   data.getMinutes().toString().padStart(2, "0") +
+    //   ":" +
+    //   data.getSeconds().toString().padStart(2, "0"); // 修改数据date
+    let ds = new Date();
+  let currentDate = new Date();
+  let tmpHours = currentDate.getHours();
+  // 算得时区
+  let time_zone = -ds.getTimezoneOffset() / 60;
+  if (time_zone < 0) {
+    time_zone = Math.abs(time_zone) + 8;
+    currentDate.setHours(tmpHours + time_zone);
+  } else {
+    time_zone -= 8;
+    currentDate.setHours(tmpHours - time_zone);
+  }
+  // return currentDate;
+  let date = currentDate;
+  let y = date.getFullYear();
+  let m:any = date.getMonth() + 1;
+  m = m < 10 ? "0" + m : m;
+  let d:any = date.getDate();
+  d = d < 10 ? "0" + d : d;
+  let h:any = date.getHours();
+  h = h < 10 ? "0" + h : h;
+  let minute:any = date.getMinutes();
+  let second:any = date.getSeconds();
+  minute = minute < 10 ? "0" + minute : minute;
+  second = second < 10 ? "0" + second : second;
+  // return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
+    timeState.date = y+m+d
+    timeState.time =h+minute+second
   }, 1000);
 }
 onMounted(() => {

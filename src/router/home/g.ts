@@ -70,6 +70,28 @@ export default [
           keepAlive: true,
         },
       },
+      {
+        path: "/Model/dome7",
+        name: "CAD转geojson",
+        component: () => import("@/views/Model/dome7.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "CAD转geojson",
+          keepAlive: true,
+        },
+      },
+      {
+        path: "/Model/dome8",
+        name: "楼梯",
+        component: () => import("@/views/Model/dome8.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "楼梯",
+          keepAlive: true,
+        },
+      },
     ],
     meta: {
       auth: true,

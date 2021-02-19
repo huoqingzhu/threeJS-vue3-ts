@@ -20,15 +20,15 @@ router.beforeEach(async (to, from, next) => {
         next();
       }else {
         try {
-           next();
+            next();
           } catch (error) {
              // 清除用户信息，退出登录，跳转登录页
             store.commit("user/LOGOUT");
           next(`/login?redirect=${to.path}`);
-         }
         }
-     }
-   } else {
+        }
+    }
+  } else {
     /* has no token */
     if (whiteList.indexOf(to.path) !== -1) {
       // 白名单中，无需验证

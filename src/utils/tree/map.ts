@@ -19,7 +19,7 @@ class Map {
     let width = this.container!.clientWidth; //窗口宽度
     let height = this.container!.clientHeight; //窗口高度
     let k = (width / height); //窗口宽高比
-    let s = 400; //三维场景显示范围控制系数，系数越大，显示的范围越大
+    let s = 300; //三维场景显示范围控制系数，系数越大，显示的范围越大
     //创建相机对象 
     // 正向投影
     if(camera){
@@ -46,7 +46,7 @@ class Map {
     let ambient = new THREE.AmbientLight(0xffffff);
      this.scene.add(ambient); //环境光对象添加到scene场景中
     }
-    this.camera.position.set(0, 300, 400); //设置相机位置
+    this.camera.position.set(0, 200, 300); //设置相机位置
     this.camera.lookAt(this.scene.position); //设置相机方向(指向的场景对象)
   }
   // 初始化
@@ -71,26 +71,27 @@ class Map {
     }, false);
   }
   // 监控点击事件
+  // 监控点击事件
   onMouseMove = () => {
     addEventListener("click", (event: { clientX: number; clientY: number; }) => {
       console.log(event.clientX,event.clientY);
-        let Sx = event.clientX;//鼠标单击位置横坐标
-        let Sy = event.clientY;//鼠标单击位置纵坐标  
+       // 拿到鼠标在屏幕的坐标
+        let mouseX = event.clientX;//鼠标单击位置横坐标
+        let mouseY = event.clientY;//鼠标单击位置纵坐标 
+        const rect=this.container?.getBoundingClientRect();//拿到div相对屏幕坐标的偏移量
         //屏幕坐标转标准设备坐标
-        let x = ( Sx / window.innerWidth ) * 2 - 1;//标准设备横坐标
-        let y = -( Sy / window.innerHeight ) * 2 + 1;//标准设备纵坐标
-        let standardVector  = new THREE.Vector3(x, y, 0.5);//标准设备坐标
+        const x = ((mouseX - rect!.left) / this.container!.clientWidth) * 2 - 1;
+        const y = - ((mouseY - rect!.top) / this.container!.clientHeight) * 2 + 1;
+        let standardVector  = new THREE.Vector3(x, y);//标准设备坐标
         //标准设备坐标转世界坐标
         let worldVector = standardVector.unproject(this.camera);
-
         console.log(`标转世界坐标${worldVector.x},${worldVector.y},${worldVector.z}`);
-        
         //射线投射方向单位向量(worldVector坐标减相机位置坐标)
         let ray = worldVector.sub(this.camera.position).normalize();
         //创建射线投射器对象
         let raycaster = new THREE.Raycaster(this.camera.position, ray);//光线投射的起点向量。  光线投射的方向向量，应该是被归一化的。
         //返回射线选中的对象
-        let intersects:any = raycaster.intersectObjects(this.scene.children);
+        let intersects:any = raycaster.intersectObjects(this.scene.children,true);//第二参数 是否遍历后代
         console.log(intersects);
         if (intersects.length > 0) {
             intersects[0].object.material.transparent = true;

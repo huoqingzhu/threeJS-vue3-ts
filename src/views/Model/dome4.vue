@@ -37,14 +37,14 @@ export default defineComponent({
       absarcShape.position.set(0, 0, -100);
       const rectang = rectangleShape();
       rectang.position.set(0, 0, 200);
-      map.addMesh(rectang);
-      map.addMesh(absarcShape);
+      // map.addMesh(rectang);
+      // map.addMesh(absarcShape);
       const arc = arcShape();
       arc.position.set(150, 150, 150);
-      map.addMesh(arc);
+      // map.addMesh(arc);
       let ambient = new THREE.AmbientLight(0xffffff);
       map.scene.add(ambient); //环境光对象添加到scene场景中
-      map.addMesh(manyShape());
+      // map.addMesh(manyShape());
       map.init();
     }
     onMounted(() => {

@@ -41,7 +41,7 @@
 import * as THREE from "three";
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted, watch } from "vue";
-import { createCube } from "@/utils/tree/model";
+import { createExtrude } from "@/utils/tree/model";
 
 interface state {
   map: any;
@@ -66,7 +66,7 @@ export default defineComponent({
     function init() {
       let container = document.getElementById("maps");
       map = new Map(container, true, false);
-      Mesh1 = createCube(0x4169e1); //创建一个模型
+      Mesh1 = createExtrude(); //创建一个模型
       map.addMesh(Mesh1); //将模型加入场景
       map.init();
     }
@@ -142,7 +142,6 @@ export default defineComponent({
       init();
       initialLight();
     });
-    function addLint() {}
     function initialLight() {
       //环境光
       ambient = new THREE.AmbientLight(state.colors);
@@ -179,13 +178,9 @@ export default defineComponent({
       // var spotLightHelper = new THREE.SpotLightHelper(spotLight);
       // map.scene.add(spotLightHelper);
     }
-    function changeColor(value: number) {
-      console.log(value);
-    }
+
     return {
       ...toRefs(state),
-      addLint,
-      changeColor,
     };
   },
 

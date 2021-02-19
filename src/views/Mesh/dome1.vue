@@ -34,7 +34,7 @@
 <script lang="ts">
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
-import { createCube } from "@/utils/tree/model";
+import { createCube, createLouTi } from "@/utils/tree/model";
 import { log } from "three";
 
 interface state {
@@ -42,7 +42,7 @@ interface state {
 }
 export default defineComponent({
   setup() {
-    let geometry = createCube();
+    let geometry = createLouTi(80, 10, 50);
     let geometryScale = 1;
     function face3() {
       let container = document.getElementById("map2");

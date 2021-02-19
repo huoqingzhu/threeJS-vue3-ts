@@ -1,10 +1,7 @@
 <template>
   <div class="zhushi">
-    <h3>拉伸扫描成型ExtrudeGeometry</h3>
-    <ul>
-      <li>拉伸成型就是将一个横面拉成三维立体的（常用）</li>
-      <li>扫描需要轮廓（一个面），轨迹线,将轮廓按照轨迹线拉伸</li>
-    </ul>
+    <h3>自定义楼梯</h3>
+
     <div id="map4"></div>
   </div>
 </template>
@@ -13,7 +10,7 @@
 import * as THREE from "three";
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
-import { createExtrude, createScanning } from "@/utils/tree/model";
+import { createLouTi, createScanning } from "@/utils/tree/model";
 
 interface state {
   map: any;
@@ -24,13 +21,11 @@ export default defineComponent({
     function init() {
       let container = document.getElementById("map4");
       let map = new Map(container);
-      map.addMesh(createExtrude());
-      // let ambient = new THREE.AmbientLight(0xffffff);
-      // map.scene.add(ambient); //环境光对象添加到scene场景中
-      let node = createScanning();
-      node.position.set(200, 200, 200);
+      map.addMesh(createLouTi(80, 10, 60));
+      const node = createLouTi(80, 10, 60, false);
+      node.position.set(100, 0, 0);
       map.addMesh(node);
-      //初始化map
+
       map.init();
     }
     onMounted(() => {

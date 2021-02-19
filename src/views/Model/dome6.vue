@@ -14,40 +14,37 @@
 
 <script lang="ts">
 import Map from "@/utils/tree/map";
-import * as THREE from "three";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
-import { createGeojson, createCube } from "@/utils/tree/model";
-
+import { createGeojson } from "@/utils/tree/model";
 interface state {
   map: any;
 }
 export default defineComponent({
   setup() {
     const data = require("./JSON/zhong.json");
+    console.log(data);
     let geometry = createGeojson(data, 5);
-    let geometryScale = 2;
+    geometry.translateX(-520);
+    geometry.translateY(-50);
     let map: Map;
-    function face3() {
+    function init() {
       let container = document.getElementById("map");
       map = new Map(container, false);
-      let ambient = new THREE.AmbientLight(0xffffff);
-      map.scene.add(ambient); //环境光对象添加到scene场景中
       map.addMesh(geometry);
-      geometry.translateX(-500);
-      geometry.translateY(-100);
       map.init();
+      map.onMouseMove();
     }
     //真实dome加载后
     onMounted(() => {
-      face3();
+      init();
     });
-
-    return {};
   },
   beforeUnmount() {
     try {
       let dome: any = document.getElementById("map");
-      dome.removeChild(dome.children[0]);
+      if (dome.children[0]) {
+        dome.removeChild(dome.children[0]);
+      }
     } catch {
       console.log("销毁出错");
     }
@@ -61,10 +58,12 @@ export default defineComponent({
   padding: 0.2rem 1rem;
   width: 100%;
   height: 100%;
+  background-color: rgb(2, 3, 27);
+  color: #fff;
 }
 
 #map {
   width: 1000px;
-  height: 600px;
+  height: 800px;
 }
 </style>
