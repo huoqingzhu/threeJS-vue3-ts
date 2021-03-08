@@ -1,15 +1,15 @@
 <template>
   <div class="zhushi">
-    <p>右 左 上 下 前后</p>
-    <div id="maps"></div>
+    <h3>天空盒</h3>
+    <div id="map8"></div>
   </div>
 </template>
-
 <script lang="ts">
 // 引入tree.js
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted } from "vue";
-import { createMaterialArr } from "@/utils/tree/model";
+import { createNormalMap } from "@/utils/tree/model";
+import * as THREE from "three";
 interface state {
   map: any;
 }
@@ -18,21 +18,29 @@ export default defineComponent({
   setup() {
     // 初始化 Map
     function init() {
-      let container = document.getElementById("maps");
+      let container = document.getElementById("map8");
       let map = new Map(container);
-      let Mesh1 = createMaterialArr(); //创建一个模型
-
+      map.scene.background = new THREE.CubeTextureLoader().load([
+        "6.jpg",
+        "3.jpg",
+        "5.jpg",
+        "2.jpg",
+        "4.jpg",
+        "1.jpg",
+      ]);
+      let Mesh1 = createNormalMap(); //创建一个模型
       map.addMesh(Mesh1); //将模型加入场景
       //初始化map
+      map.camera.position.set(0, 0, 1000); //设置相机位置
+      map.camera.lookAt(map.scene.position); //设置相机方向(指向的场景对象)
       map.init();
     }
     onMounted(() => {
-      console.log("重新创建");
       init();
     });
   },
   beforeUnmount() {
-    let dome: any = document.getElementById("maps");
+    let dome: any = document.getElementById("map8");
     dome.removeChild(dome.children[0]);
   },
 });
@@ -45,11 +53,8 @@ export default defineComponent({
   width: 100%;
   height: 100%;
 }
-#maps {
-  width: 700px;
-  height: 700px;
-  canvas {
-    display: none;
-  }
+#map8 {
+  width: 1000px;
+  height: 800px;
 }
 </style>

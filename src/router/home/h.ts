@@ -81,6 +81,17 @@ export default [
           keepAlive: true,
         },
       },  
+      {
+        path: "/Texture/dome8",
+        name: "天空盒",
+        component: () => import("@/views/Texture/dome8.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "天空盒",
+          keepAlive: true,
+        },
+      },  
     ],
     meta: {
       auth: true,

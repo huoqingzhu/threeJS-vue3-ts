@@ -10,6 +10,13 @@ class Map {
   public callBack?:Function//在reader执行的回调参数
   public raycaster = new THREE.Raycaster();//用来选择对象
   public mouse = new THREE.Vector2();//鼠标在场景中的位置
+  /**
+   * 
+   * @param container 
+   * @param camera 是否是透视相机
+   * @param Light 
+   * @param callBack 
+   */
   constructor(container:HTMLElement|null,camera:boolean=true,Light:boolean=true,callBack?:Function) {
     this.container = container
     this.callBack=callBack
@@ -22,7 +29,7 @@ class Map {
     let s = 300; //三维场景显示范围控制系数，系数越大，显示的范围越大
     //创建相机对象 
     // 正向投影
-    if(camera){
+    if(!camera){
       this.camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
     }else{//透视投影
       this.camera = new THREE.PerspectiveCamera( 75, width/height, 1, 10000 );
@@ -36,8 +43,9 @@ class Map {
      * 创建渲染器对象
      */
     //辅助三维坐标系AxisHelper
-    let axisHelper = new THREE.AxesHelper(450);
-    this.scene.add(axisHelper);
+    // let axisHelper = new THREE.AxesHelper(450);
+    // this.scene.add(axisHelper);
+    
     this.renderer.setSize(width, height); //设置渲染区域尺寸
     // 初始化控制系统
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
@@ -54,7 +62,11 @@ class Map {
     //点光源
     this.renderer.setClearColor(0xEEEEEE, 0.0);//设置背景颜色(0x4169E1, 1)
     this.container!.appendChild(this.renderer.domElement); //body元素中插入canvas对象
-    
+        // 上下旋转范围
+        this.controls.minPolarAngle = 0;
+        this.controls.maxPolarAngle = Math.PI/3;
+        this.controls.autoRotate=true
+        this.controls.autoRotateSpeed=0.5
     this.createControls()//监听窗口变化
     this.render()
   }
@@ -62,7 +74,7 @@ class Map {
   render = () => {
     requestAnimationFrame(this.render); //请求再次执行渲染函数render
     this.renderer.render(this.scene, this.camera);//执行渲染操作
-    this.callBack?this.callBack():null
+    this.controls.update()
   }
   createControls = () => {
     // 监听浏览器窗口的变化

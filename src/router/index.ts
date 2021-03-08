@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw,createWebHistory } from "vue-router";
 const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
   files
     .keys()
