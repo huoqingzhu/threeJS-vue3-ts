@@ -29,7 +29,7 @@
 import * as THREE from "three";
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted, watch } from "vue";
-import { createCube } from "@/utils/tree/model";
+import { createCube, createCircular } from "@/utils/tree/model";
 
 interface state {
   map: any;

@@ -1,6 +1,12 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+const SEPARATION = 60; //距离
+const AMOUNTX = 50; //x横坐标
+const AMOUNTY = 50; //y坐标
+let particles:any; //粒子数组
+let particle:any; //粒子
+let count = 0; //控制粒子变化的变量
 class Map {
   public camera:THREE.Camera//相机
   public scene:THREE.Scene=new THREE.Scene();//场景
@@ -10,19 +16,23 @@ class Map {
   public callBack?:Function//在reader执行的回调参数
   public raycaster = new THREE.Raycaster();//用来选择对象
   public mouse = new THREE.Vector2();//鼠标在场景中的位置
+  public isParticle:boolean=false;
+
+
   /**
    * 
    * @param container 
    * @param camera 是否是透视相机
    * @param Light 
-   * @param callBack 
+   * @param particle 是否开启粒子效果
    */
-  constructor(container:HTMLElement|null,camera:boolean=true,Light:boolean=true,callBack?:Function) {
+  constructor(container:HTMLElement|null,camera:boolean=true,Light:boolean=true,isParticle:boolean=false) {
     this.container = container
-    this.callBack=callBack
+    // this.callBack=callBack
     /**
      * 相机设置
      */
+    this.isParticle=isParticle
     let width = this.container!.clientWidth; //窗口宽度
     let height = this.container!.clientHeight; //窗口高度
     let k = (width / height); //窗口宽高比
@@ -54,6 +64,9 @@ class Map {
     let ambient = new THREE.AmbientLight(0xffffff);
      this.scene.add(ambient); //环境光对象添加到scene场景中
     }
+    if(isParticle){
+      this.lizi()
+    }
     this.camera.position.set(0, 200, 300); //设置相机位置
     this.camera.lookAt(this.scene.position); //设置相机方向(指向的场景对象)
   }
@@ -74,8 +87,48 @@ class Map {
   render = () => {
     requestAnimationFrame(this.render); //请求再次执行渲染函数render
     this.renderer.render(this.scene, this.camera);//执行渲染操作
+    if(this.isParticle){
+        let i = 0;
+      for (let ix = 0; ix < AMOUNTX; ix++) {
+        for (let iy = 0; iy < AMOUNTY; iy++) {
+          particle = particles[i++];
+          particle.position.y =
+            Math.sin((ix + count) * 0.3) * 50 +
+            Math.sin((iy + count) * 0.5) * 50;
+          particle.scale.x = particle.scale.y =
+            (Math.sin((ix + count) * 0.3) + 1) * 2 +
+            (Math.sin((iy + count) * 0.5) + 1) * 2;
+        }
+      }
+      count += 0.1;
+    }
+    
+
     this.controls.update()
   }
+lizi = () => {
+    particles = [];
+    const PI2 = Math.PI * 1;
+    const material = new THREE.SpriteMaterial({
+      color: "#6cedfc",
+      // @ts-ignore
+      program: (context:any) => {
+        context.beginPath();
+        context.arc(0, 0, 1, 0, PI2, true);
+        context.fill();
+      },
+    });
+
+    let i = 0;
+    for (let ix = 0; ix < AMOUNTX; ix++) {
+      for (let iy = 0; iy < AMOUNTY; iy++) {
+        particle = particles[i++] = new THREE.Sprite(material);
+        particle.position.x = ix * SEPARATION - (AMOUNTX * SEPARATION) / 2;
+        particle.position.z = iy * SEPARATION - (AMOUNTY * SEPARATION) / 2;
+        this.scene.add(particle);
+      }
+    }
+  };
   createControls = () => {
     // 监听浏览器窗口的变化
     addEventListener('resize', (e) => {

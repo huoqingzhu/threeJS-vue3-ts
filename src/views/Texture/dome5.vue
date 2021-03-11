@@ -19,9 +19,7 @@ export default defineComponent({
     function init() {
       let Mesh1 = createRepeatOffset();
       let container = document.getElementById("maps");
-      let map = new Map(container, true, true, () => {
-        Mesh1.texture.offset.x -= 0.06;
-      });
+      let map = new Map(container, true, true);
       //创建一个模型
       Mesh1.mesh.rotateY(180);
       map.addMesh(Mesh1.mesh); //将模型加入场景

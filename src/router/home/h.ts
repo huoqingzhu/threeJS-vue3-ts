@@ -91,7 +91,18 @@ export default [
           title: "天空盒",
           keepAlive: true,
         },
-      },  
+      }, 
+      {
+        path: "/Texture/dome9",
+        name: "圆弧帖纸",
+        component: () => import("@/views/Texture/dome9.vue"),
+        meta: {
+          auth: true,
+          iocn: "CloudOutlined",
+          title: "圆弧帖纸",
+          keepAlive: true,
+        },
+      }, 
     ],
     meta: {
       auth: true,

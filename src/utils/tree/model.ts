@@ -17,6 +17,7 @@ const createCube=(color:number=0x0000ff):THREE.Mesh=>{
   cube = new THREE.Mesh(geometry, material); //网格模型对象Mesh
   return cube
 }
+
 /**
  * @name 几何体本质 网格模型Mesh是由立方体几何体geometry和材质material两部分构成
  * @param sting  什么类型的几何体
@@ -434,20 +435,21 @@ return personGroup
 /**
  * 创建圆弧
  */
-const createArcCurve=():THREE.Line=>{
+const createArcCurve=()=>{
     let geometry = new THREE.Geometry(); //声明一个几何体对象Geometry
     //参数：0, 0圆弧坐标原点x，y  100：圆弧半径    0, 2 * Math.PI：圆弧起始角度
-    let arc = new THREE.ArcCurve(0, 0, 100, 0, 1* Math.PI,false);
+    let arc = new THREE.ArcCurve(0, 0, 100, 0, 2* Math.PI,false);
     //getPoints是基类Curve的方法，返回一个vector2对象作为元素组成的数组
     let points = arc.getPoints(50);//分段数50，返回51个顶点
     // setFromPoints方法从points中提取数据改变几何体的顶点属性vertices
     geometry.setFromPoints(points); 
-    let material = new THREE.LineBasicMaterial({
-      color: 0x000000
-    });
-    //线条模型对象
-    let line = new THREE.Line(geometry, material);
-    return line
+    let material = new THREE.MeshLambertMaterial({
+      color:0x0000ff,//三角面颜色
+      side:THREE.DoubleSide//两面可见
+  });//材质对象
+  // material.wireframe = true;//线条模式渲染(查看细分数)
+  return new THREE.Mesh(geometry,material);//旋转网格模型对象
+
 }
 /**
  * 创建直线(直接给几何体Geometry设置两个顶点数据。)
@@ -653,23 +655,49 @@ const ShapeGeometry=():THREE.Mesh=>{
 /**
  * 填充绘制圆形.absarc()
  */
-const absarcShapeGeometry=():THREE.Mesh=>{
-  let shape = new THREE.Shape();
-  shape.absarc(0,0,100,0,2*Math.PI,false);//圆弧轮廓
-  let geometry = new THREE.ShapeGeometry(shape, 25);
-  let material=new THREE.MeshLambertMaterial({
-      color:0xcccccc,//三角面颜色
-      side:THREE.DoubleSide//两面可见
-  });//材质对象
+const createCircular=()=>{
+var geometry=new THREE.CylinderGeometry(800,800,1,40); 
+let texture = new THREE.TextureLoader().load(
+  "turntable.png"
+);
+var material = new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true,map:texture } );
+  var mesh = new THREE.Mesh( geometry, material );
   // material.wireframe = true;//线条模式渲染(查看细分数)
-  return new THREE.Mesh(geometry,material);//旋转网格模型对象
+  return mesh;//旋转网格模型对象
+}
+/**
+ * 
+ * @returns circular
+ */
+const absarcShapeGeometry=()=>{
+    let shape = new THREE.Shape();
+  shape.absarc(0,0,100,0,2*Math.PI,false);//圆弧轮廓
+  var geometry = new THREE.ExtrudeGeometry(//拉伸造型
+    shape,//二维轮廓
+    //拉伸参数
+    {
+        bevelEnabled:false,//无倒角
+        // extrudePath:curve,//选择扫描轨迹
+        steps:50//扫描方向细分数
+    }
+ );
+  // let geometry = new THREE.ShapeGeometry(shape, 500);
+  let texture = new THREE.TextureLoader().load(
+    "turntable.png"
+  );
+  let material=new THREE.MeshLambertMaterial({
+      // color:0xcccccc,//三角面颜色
+      // side:THREE.DoubleSide,//两面可见
+      map: texture,
+  });//材质对象
+  return new THREE.Mesh( geometry, material );
 }
 /**
  * 绘制矩形shap
  */
 const rectangleShape=():THREE.Mesh=>{
    // 通过shpae基类path的方法绘制轮廓（本质也是生成顶点）
-   let points = [
+  let points = [
     new THREE.Vector2(-50, -50),
     new THREE.Vector2(-60, 0),
     new THREE.Vector2(0, 50),
@@ -919,9 +947,9 @@ const  createGeojson=(json:any,height:number):THREE.Group=> {
 const createTexture=():THREE.Mesh=>{
     // 纹理贴图映射到一个矩形平面上
 
-    let geometry = new THREE.BoxGeometry(400, 400, 400); //立方体
+    let geometry = new THREE.BoxGeometry(400, 400, 1); //立方体
     let texture = new THREE.TextureLoader().load(
-      "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1435880887,2953173287&fm=26&gp=0.jpg"
+      "turntable.png"
     );
 
     // 立即使用纹理进行材质创建
@@ -935,17 +963,17 @@ const createTexture=():THREE.Mesh=>{
  * 添加数组材质
  */
 const createMaterialArr=():THREE.Mesh=>{
-  let geometry = new THREE.BoxGeometry(100, 100, 100); //立方体
+  let geometry = new THREE.BoxGeometry(100, 100, 1); //立方体
   // let geometry = new THREE.PlaneGeometry(204, 102, 4, 4); //矩形平面
   // let geometry = new THREE.SphereGeometry(60, 25, 25); //球体
   // let geometry = new THREE.CylinderGeometry(60, 60, 25,25); //圆柱
   //
   // 材质对象1
   let material_1 = new THREE.MeshPhongMaterial({
-    color: 0xffff3f
+    color: 0x00FFFF
   })
   let texture = new THREE.TextureLoader().load(
-    "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1435880887,2953173287&fm=26&gp=0.jpg"
+    "turntable.png"
   );
   // 材质对象2
   let material_2 = new THREE.MeshLambertMaterial({
@@ -953,7 +981,7 @@ const createMaterialArr=():THREE.Mesh=>{
     // wireframe:true,
   });
   // 设置材质数组  数据顺序:右 左 上 下  前后
-  let materialArr = [material_2, material_2, material_2, material_2, material_1, material_1];
+  let materialArr = [material_1, material_1,  material_1, material_1,material_2, material_2,];
   
   // 设置数组材质对象作为网格模型材质参数
   let mesh = new THREE.Mesh(geometry, materialArr); //网格模型对象Mesh
@@ -1115,6 +1143,7 @@ export {
   noIndex,
   index,
   VectorLine,
+  createCircular,
   Face3,
   creatGrou,
   creatPersonModel,

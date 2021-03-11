@@ -41,7 +41,7 @@
 import * as THREE from "three";
 import Map from "@/utils/tree/map";
 import { defineComponent, toRefs, reactive, onMounted, watch } from "vue";
-import { createExtrude } from "@/utils/tree/model";
+import { createExtrude, createCircular } from "@/utils/tree/model";
 
 interface state {
   map: any;
@@ -66,7 +66,7 @@ export default defineComponent({
     function init() {
       let container = document.getElementById("maps");
       map = new Map(container, true, false);
-      Mesh1 = createExtrude(); //创建一个模型
+      Mesh1 = createCircular(); //创建一个模型
       map.addMesh(Mesh1); //将模型加入场景
       map.init();
     }
@@ -203,6 +203,7 @@ export default defineComponent({
 #maps {
   width: 700px;
   height: 700px;
+  background-image: radial-gradient(circle, rgb(3, 3, 63), rgb(1, 6, 24), #000);
   canvas {
     display: none;
   }
