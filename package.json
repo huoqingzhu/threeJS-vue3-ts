@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^2.0.0-rc.3",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "compression-webpack-plugin": "^6.0.3",
     "core-js": "^3.6.5",
     "default-passive-events": "^2.0.0",
